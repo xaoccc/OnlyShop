@@ -1,0 +1,78 @@
+.carousel-item {
+      height: 45vh;
+    }
+.card {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.footer-cta {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+}
+.price {
+  color: #263238;
+  font-size: 24px;
+}
+
+.card-title {
+color:#263238
+}
+
+.sale {
+  color: #E53935
+}
+
+.sale-badge {
+  background-color: #E53935
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+}
+
+.image-wrapper {
+    width: 200px; /* Set your desired width */
+    text-align: center; /* Center align text */
+}
+
+.img-footer {
+    width: 100%; /* Ensure the image fills the container */
+    height: 200px; /* Set your desired height */
+    object-fit: cover;
+}
+
+.login-form {
+    max-width: 30em;
+    margin: 2em auto;
+}
+
+.main-img {
+        width: 100%;
+    }
+
+.card-container {
+    margin-top: 2em;
+}
+
+.product-list-img-wrapper {
+  position: relative;
+  padding-bottom: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.product-list-img-wrapper img {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .login-form {
+        max-width: 20em;
+    }
+
+    .main-img {
+        width: unset;
+    }
+}

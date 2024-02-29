@@ -1,0 +1,189 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>OnlyShop</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/bag-heart-fill.svg' %}" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <!-- Start your project here-->
+    <!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+  <!-- Container wrapper -->
+  <div class="container">
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent1"
+      aria-controls="navbarSupportedContent1"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+      <!-- Navbar brand -->
+      <a class="navbar-brand mt-2 mt-sm-0" href="{% url 'index' %}">
+        <img
+          src="{% static 'img/bag-heart-fill.svg' %}"
+          height="20"
+          alt="MDB Logo"
+          loading="lazy"
+        />
+      </a>
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link " href="{% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Checkout</a>
+        </li>
+      </ul>
+      <!-- Left links -->
+    </div>
+    <!-- Collapsible wrapper -->
+
+    <div class="d-flex align-items-center">
+      <a class="nav-link me-3" href="#">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="badge rounded-pill badge-notification bg-danger">1</span>
+      </a>
+
+      <a class="nav-link me-3" href="https://www.facebook.com/georgi.tashev">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a class="nav-link me-3" href="https://www.linkedin.com/in/georgi-tashev-3aab33a/">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/xaoccc" class="border rounded px-2 nav-link"
+              target="_blank">
+              <i class="fab fa-github me-2"></i>GitHub
+            </a>
+    </div>
+
+  </div>
+
+</nav>
+<!-- Navbar -->
+
+<!-- carousel -->
+<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'img/main-theme.jpg' %}" class="d-block main-img" alt="Animated shopping cart on a orange background"/>
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
+      <div class="carousel-caption d-none d-sm-block ">
+              <h1 class="mb-4">
+                <strong>Buy Anything</strong>
+              </h1>
+
+              <p>
+                <strong>Designed for women, appreciated by men</strong>
+              </p>
+
+              <p class="mb-4 d-none d-md-block">
+                <strong>Here you will find Small products: earrings, chargers, memory cars, etc., Big products: cars, houses, helicopters, etc. Abstract products: website templates, online courses and many more</strong>
+              </p>
+
+              <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">More info</a>
+      </div>
+    </div>
+  </div>
+  </div>
+  {% block content %}
+{% endblock  %}
+<footer class="text-center text-white mt-4" style="background-color: #607D8B">
+
+  <hr class="text-dark">
+
+  <div class="container">
+    <!-- Section: Social media -->
+    <section class="mb-3">
+
+      <!-- Facebook -->
+      <a
+        class="btn-link btn-floating btn-lg text-white"
+        href="https://www.facebook.com/georgi.tashev"
+        role="button"
+        data-mdb-ripple-color="dark"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a
+        class="btn-link btn-floating btn-lg text-white"
+        href="https://www.linkedin.com/in/georgi-tashev-3aab33a/"
+        role="button"
+        data-mdb-ripple-color="dark"
+        ><i class="fab fa-linkedin"></i
+      ></a>
+
+      <!-- Google -->
+      <a
+        class="btn-link btn-floating btn-lg text-white"
+        href="https://google.com/"
+        role="button"
+        data-mdb-ripple-color="dark"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a
+        class="btn-link btn-floating btn-lg text-white"
+        href="https://www.instagram.com/helltash/"
+        role="button"
+        data-mdb-ripple-color="dark"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- YouTube -->
+      <a
+        class="btn-link btn-floating btn-lg text-white"
+        href="https://www.youtube.com/watch?v=pkcJEvMcnEg&list=PLGWkX3-8Gn-hFT6K00_mKC8QyuTV36FmQ"
+        role="button"
+        data-mdb-ripple-color="dark"
+        ><i class="fab fa-youtube"></i
+      ></a>
+      <!-- Github -->
+      <a
+        class="btn-link btn-floating btn-lg text-white"
+        href="https://github.com/xaoccc"
+        role="button"
+        data-mdb-ripple-color="dark"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+    </footer>
+    <script type="text/javascript" src="{% static 'js/mdb.umd.min.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="mt-5 pt-4">
+    <div class="container mt-5">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+                <img src="{{ object.image }}" class="img-fluid" alt="" />
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
+                <!--Content-->
+                <div class="p-4">
+                    <div class="mb-3">
+                        <a href="">
+                            <span class="badge bg-dark me-1">{{ object.type }}</span>
+                        </a>
+                    </div>
+
+                    <p class="lead">
+                        {% if object.old_price %}
+                            <span class="me-1">
+                                <del>${{ object.old_price }}</del>
+                            </span>
+                        {% endif %}
+                        <span>${{ object.new_price }}</span>
+                    </p>
+
+                    <strong><p style="font-size: 20px;">Description</p>{{ object.description }}</strong>
+
+                    <p></p>
+
+<!--                    <form class="d-flex justify-content-left">-->
+<!--                        &lt;!&ndash; Default input &ndash;&gt;-->
+<!--                        <div class="form-outline me-1" style="width: 100px;">-->
+<!--                            <input type="number" value="1" class="form-control" />-->
+<!--                        </div>-->
+<!--                        <button class="btn btn-primary ms-1" type="submit">-->
+<!--                            Add to cart-->
+<!--                            <i class="fas fa-shopping-cart ms-1"></i>-->
+<!--                        </button>-->
+<!--                    </form>-->
+
+
+                        <a href="{% url 'add-to-cart' pk=object.pk %}" class="btn btn-primary ms-1" type="submit">
+                            Add to cart
+                            <i class="fas fa-shopping-cart ms-1"></i>
+                        </a>
+
+
+                        <a href="{% url 'remove-from-cart' pk=object.pk %}" class="btn btn-danger ms-1" type="submit">
+                            Remove from cart
+                            <i class="fas fa-shopping-cart ms-1"></i>
+                        </a>
+
+                    {% if messages %}
+                    <ul class="messages list-unstyled">
+                        {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+{% endif %}
+
+
+                </div>
+                <!--Content-->
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+
+        <hr />
+
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center">
+            <!--Grid column-->
+            <div class="col-md-6 text-center">
+                <h4 class="my-4 h4">Additional information</h4>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit voluptates, quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->
+
+
+        <!--TODO: replace images of other products with images of current product. -->
+        <div class="row image-container">
+            {% for item in all_items %}
+                <div class="col-lg-4 col-md-12 mb-4 image-wrapper">
+                    <img class="img-footer" src="{{ item.image }}" class="img-fluid" alt="{{ item.name }}" />
+                </div>
+            {% endfor %}
+        </div>
+        <!--Grid row-->
+    </div>
+</main>
+{% endblock %}
