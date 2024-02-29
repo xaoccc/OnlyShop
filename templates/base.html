@@ -92,7 +92,14 @@
       <a href="https://github.com/xaoccc" class="border rounded px-2 nav-link"
               target="_blank">
               <i class="fab fa-github me-2"></i>GitHub
-            </a>
+      </a>
+      {% if user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link " href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+      {% endif %}
     </div>
 
   </div>

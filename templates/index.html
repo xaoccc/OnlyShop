@@ -155,7 +155,16 @@
         <p>Not a member? <a href="#!">Register</a></p>
       </div>
     </form>
-{% endif %}
+  {% endif %}
+      {{ user }}
+    {{ user.is_authenticated }}
+
+    <form class="login-form" action="{% url 'login' %}" method="post">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <button type="button" class="btn btn-info btn-block mb-4">Sign in</button>
+    </form>
+
 
 </main>
 {% endblock %}
