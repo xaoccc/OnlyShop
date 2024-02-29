@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, TemplateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from django.contrib import messages
 
+from OnlyShop.profiles.models import AppUser
 
 
 class ItemDetailView(DetailView):
@@ -14,8 +14,10 @@ class ItemDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['all_items'] = Item.objects.exclude(id=self.object.id)[:3]
-
+        context['user'] = AppUser.objects.first()
+        context['orders'] = Order.objects.filter(user=self.request.user, ordered=False)[0].items
         return context
+
 
 
 def add_to_cart(request, pk):

@@ -53,27 +53,35 @@
           loading="lazy"
         />
       </a>
-      <!-- Left links -->
+      {% if user.is_authenticated %}
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item active">
           <a class="nav-link " href="{% url 'index' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Product</a>
+          <a class="nav-link" href="#">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Checkout</a>
         </li>
+        {% if user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link" href="#">Add Item</a>
+          </li>
+        {% endif %}
       </ul>
+      {% endif %}
       <!-- Left links -->
     </div>
     <!-- Collapsible wrapper -->
 
     <div class="d-flex align-items-center">
-      <a class="nav-link me-3" href="#">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="badge rounded-pill badge-notification bg-danger">1</span>
-      </a>
+      {% if user.is_authenticated %}
+        <a class="nav-link me-3" href="#">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="badge rounded-pill badge-notification bg-danger">{{ orders.count }}</span>
+        </a>
+      {% endif %}
 
       <a class="nav-link me-3" href="https://www.facebook.com/georgi.tashev">
         <i class="fab fa-facebook-f"></i>
@@ -102,6 +110,7 @@
               <h1 class="mb-4">
                 <strong>Buy Anything</strong>
               </h1>
+
 
               <p>
                 <strong>Designed for women, appreciated by men</strong>

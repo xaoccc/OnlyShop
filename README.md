@@ -1,2 +1,2 @@
 # OnlyShop
-A web store
+A web store created with Django, Python, HTML, CSS and Bootstrap
