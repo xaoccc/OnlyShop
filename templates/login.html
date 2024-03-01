@@ -6,9 +6,9 @@
         {% csrf_token %}
         {{ form.non_field_errors }}
         <div class="form-outline" data-mdb-input-init>
-            {{ form.username.errors }}
-            {{ form.username }}
-            <label class="form-label" for="{{ form.username.id_for_label }}">Username:</label>
+            {{ form.email.errors }}
+            {{ form.email }}
+            <label class="form-label" for="{{ form.username.id_for_label }}">Email:</label>
         </div>
         <div class="form-outline" data-mdb-input-init>
             {{ form.password.errors }}
@@ -20,6 +20,9 @@
         <div class="text-center">
             <p>Not a member? <a href="{% url 'register' %}">Register</a></p>
         </div>
+    </form>
+
+
 
 </main>
 {% endblock %}
