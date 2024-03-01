@@ -28,7 +28,7 @@ class CustomUserManager(BaseUserManager):
 class AppUser(AbstractBaseUser, PermissionsMixin):
     age = models.PositiveIntegerField(null=True, blank=True)
     email = models.EmailField(unique=True)
-    is_staff = models.BooleanField()
+    is_staff = models.BooleanField(default=True)
     USERNAME_FIELD = 'email'
 
     objects = CustomUserManager()

@@ -1,7 +1,7 @@
 
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -10,7 +10,7 @@ from OnlyShop.main_app.models import Item, Order, ItemOrder
 from OnlyShop.profiles.forms import CustomAuthenticationForm, CreateUserForm
 from OnlyShop.profiles.models import AppUser
 
-
+UserModel = get_user_model()
 class IndexView(ListView):
     model = Item
     template_name = 'index.html'
@@ -25,13 +25,10 @@ class IndexView(ListView):
         return context
 
 
-
-
 class UserLogIn(LoginView):
     authentication_form = CustomAuthenticationForm
     template_name = 'login.html'
-    next_page = 'index'
-
+    # next_page = 'index'
 
 
 class RegisterView(CreateView):
@@ -46,9 +43,13 @@ class RegisterView(CreateView):
     def get_success_url(self):
         return reverse('index')
 
+# class RegisterView(CreateView):
+#     form_class = UserCreationForm
+#     template_name = 'register.html'
+#     def get_success_url(self):
+#         return reverse('index')
 
 def user_logout(request):
-    request.user = AnonymousUser()
     logout(request)
     return redirect('index')
 
