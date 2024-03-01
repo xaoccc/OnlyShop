@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-  <main>
+<main>
+    <form class="register-form" action="{% url 'register' %}" method="post">
+        {% csrf_token %}
 
-    <form class="login-form">
-
-
-      <button type="button" class="btn btn-info btn-block mb-4">Create user profile</button>
-
+        <button type="submit">Create New User</button>
     </form>
 
-
-  </main>
+</main>
 {% endblock %}

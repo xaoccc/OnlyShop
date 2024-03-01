@@ -62,28 +62,45 @@
               <div class="card">
                 <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light product-list-img-wrapper"
                   data-mdb-ripple-color="light">
-                  <img src="{{ object.image }}"
-                    class="img-fluid product-image" />
-                  <a href="{% url 'item-details' pk=object.pk %}">
-                    <div class="mask">
-                      {% if object.label %}
-                        <div class="d-flex justify-content-start align-items-end h-100">
-                          <h5><span class="badge {{ object.label_style }} ms-2">{{ object.label }}</span></h5>
-                        </div>
-                      {% endif %}
-                    </div>
-                    <div class="hover-overlay">
-                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                    </div>
-                  </a>
+                  <img src="{{ object.image }}" class="img-fluid product-image" />
+
+                  {% if user.is_authenticated %}
+                    <a href="{% url 'item-details' pk=object.pk %}">
+                  {% else %}
+                    <a href="{% url 'login' %}">
+                  {% endif %}
+
+                      <div class="mask">
+                        {% if object.label %}
+                          <div class="d-flex justify-content-start align-items-end h-100">
+                            <h5><span class="badge {{ object.label_style }} ms-2">{{ object.label }}</span></h5>
+                          </div>
+                        {% endif %}
+                      </div>
+                      <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                      </div>
+                    </a>
                 </div>
                 <div class="card-body">
-                  <a href="{% url 'item-details' pk=object.pk %}" class="text-reset">
-                    <h5 class="card-title mb-2">{{ object.name }}</h5>
-                  </a>
-                  <a href="{% url 'item-details' pk=object.pk %}" class="text-reset ">
-                    <p>{{ object.type }}</p>
-                  </a>
+
+                  {% if user.is_authenticated %}
+                    <a href="{% url 'item-details' pk=object.pk %}" class="text-reset">
+                      <h5 class="card-title mb-2">{{ object.name }}</h5>
+                    </a>
+                    <a href="{% url 'item-details' pk=object.pk %}" class="text-reset ">
+                      <p>{{ object.type }}</p>
+                    </a>
+                  {% else %}
+                    <a href="{% url 'login' %}" class="text-reset">
+                      <h5 class="card-title mb-2">{{ object.name }}</h5>
+                    </a>
+                    <a href="{% url 'login' %}" class="text-reset ">
+                      <p>{{ object.type }}</p>
+                    </a>
+                  {% endif %}
+
+
                   <h6 class="mb-3 price">{{ object.new_price }}$</h6>
                 </div>
               </div>
@@ -117,53 +134,10 @@
   <!-- Pagination -->
   </div>
 {% else %}
-      <form class="login-form">
-      <!-- Email input -->
-      <div class="form-outline" data-mdb-input-init>
-        <input type="email" id="typeEmail" class="form-control" />
-        <label class="form-label" for="typeEmail">Email address</label>
-      </div>
-      <br/>
 
-      <!-- Password input -->
-      <div class="form-outline" data-mdb-input-init>
-        <input type="password" id="typePassword" class="form-control" />
-        <label class="form-label" for="typePassword">Password input</label>
-      </div>
-
-      <!-- 2 column grid layout for inline styling -->
-      <div class="row mb-4">
-        <div class="col d-flex justify-content-center">
-          <!-- Checkbox -->
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-            <label class="form-check-label" for="form2Example31"> Remember me </label>
-          </div>
-        </div>
-
-        <div class="col">
-          <!-- Simple link -->
-          <a href="#!">Forgot password?</a>
-        </div>
-      </div>
-
-      <!-- Submit button -->
-      <button type="button" class="btn btn-info btn-block mb-4">Sign in</button>
-
-      <!-- Register buttons -->
-      <div class="text-center">
-        <p>Not a member? <a href="#!">Register</a></p>
-      </div>
-    </form>
   {% endif %}
-      {{ user }}
-    {{ user.is_authenticated }}
 
-    <form class="login-form" action="{% url 'login' %}" method="post">
-      {{ form.as_p }}
-      {% csrf_token %}
-      <button type="button" class="btn btn-info btn-block mb-4">Sign in</button>
-    </form>
+
 
 
 </main>

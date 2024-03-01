@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, TemplateView, CreateView, RedirectView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
+from OnlyShop.profiles.forms import CustomAuthenticationForm
 from OnlyShop.profiles.models import AppUser
 
 
@@ -26,10 +27,20 @@ class IndexView(ListView, LoginView):
 
 
 
+
+class UserLogIn(LoginView):
+    authentication_form = CustomAuthenticationForm
+    template_name = 'login.html'
+    next_page = 'index'
+
+
+
+
+
 class RegisterView(CreateView):
     model = AppUser
     template_name = 'register.html'
-    fields = ['email', 'pass']
+    fields = ['username', 'password']
 
 
 # class UserLogoutView(LogoutView):

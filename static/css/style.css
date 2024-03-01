@@ -1,3 +1,11 @@
+ul {
+    padding-left: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
 .carousel-item {
       height: 45vh;
     }
@@ -43,6 +51,10 @@ color:#263238
 .login-form {
     max-width: 30em;
     margin: 2em auto;
+}
+
+.login-form input {
+    margin-bottom: 1.5em;
 }
 
 .main-img {
