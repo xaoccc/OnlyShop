@@ -1,5 +1,5 @@
 
-from django.contrib.auth import logout, get_user_model
+from django.contrib.auth import logout, get_user_model, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.views import LoginView, LogoutView
@@ -31,23 +31,28 @@ class UserLogIn(LoginView):
     # next_page = 'index'
 
 
+# class RegisterView(CreateView):
+#     form_class = CreateUserForm
+#     template_name = 'register.html'
+#
+#     def form_valid(self, form):
+#         form.instance.password = make_password(form.cleaned_data['password'])
+#         form.save()
+#         return super().form_valid(form)
+#
+#     def get_success_url(self):
+#         return reverse('index')
+
 class RegisterView(CreateView):
     form_class = CreateUserForm
     template_name = 'register.html'
-
-    def form_valid(self, form):
-        form.instance.password = make_password(form.cleaned_data['password'])
-        form.save()
-        return super().form_valid(form)
-
     def get_success_url(self):
         return reverse('index')
 
-# class RegisterView(CreateView):
-#     form_class = UserCreationForm
-#     template_name = 'register.html'
-#     def get_success_url(self):
-#         return reverse('index')
+    def form_valid(self, *args, **kwargs):
+        form = super().form_valid(*args, **kwargs)
+        login(self.request, self.object)
+        return form
 
 def user_logout(request):
     logout(request)

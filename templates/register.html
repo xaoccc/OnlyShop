@@ -3,7 +3,25 @@
 <main>
     <form class="register-form" action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.non_field_errors }}
+        <div class="form-outline" data-mdb-input-init>
+            {{ form.email.errors }}
+            {{ form.email }}
+            <label class="form-label" for="{{ form.username.id_for_label }}">Email:</label>
+        </div>
+        <div class="form-outline" data-mdb-input-init>
+            {{ form.password1 }}
+         <label class="form-label" for="{{ form.password.id_for_label }}">Password:</label>
+        </div>
+        {{ form.password1.errors }}
+        <small class="form-text text-muted">{{ form.password1.help_text }}</small>
+         <div class="form-outline" data-mdb-input-init>
+
+            {{ form.password2 }}
+         <label class="form-label" for="{{ form.password.id_for_label }}">Confirm Password:</label>
+        </div>
+        {{ form.password2.errors }}
+        <small class="form-text text-muted">{{ form.password2.help_text }}</small>
 
         <button type="submit" class="btn btn-info btn-block mb-4">Create New User</button>
     </form>

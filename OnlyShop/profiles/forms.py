@@ -1,5 +1,5 @@
 
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate
 from django import forms
 
@@ -30,7 +30,13 @@ class CustomAuthenticationForm(AuthenticationForm):
 
         return self.cleaned_data
 
-class CreateUserForm(forms.ModelForm):
+class CreateUserForm(UserCreationForm):
     class Meta:
         model = AppUser
-        fields = ['email', 'password']
+        fields = ['email', 'password1', 'password2']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({'class': 'form-control active'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control active'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control active'})
