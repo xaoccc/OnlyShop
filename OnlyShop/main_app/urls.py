@@ -1,9 +1,11 @@
 from django.urls import path, include
-from OnlyShop.main_app import views
+from OnlyShop.main_app import views as product_views
+from OnlyShop.profiles import views as profile_views
 
 urlpatterns = [
-    path('<int:pk>/details/', views.ItemDetailView.as_view(), name='item-details'),
-    path('<int:pk>/add-to-cart/', views.add_to_cart, name='add-to-cart'),
-    path('<int:pk>/remove-from-cart/', views.remove_from_cart, name='remove-from-cart'),
-    path('add-item/', views.ItemCreateView.as_view(), name='add_item'),
+    path('<int:pk>/details/', product_views.ItemDetailView.as_view(), name='item-details'),
+    path('<int:pk>/add-to-cart/', product_views.add_to_cart, name='add-to-cart'),
+    path('<int:pk>/remove-from-cart/', product_views.remove_from_cart, name='remove-from-cart'),
+    path('add-item/', product_views.ItemCreateView.as_view(), name='add_item'),
+    path('checkout/', profile_views.OrderSummaryView.as_view(), name='checkout'),
 ]

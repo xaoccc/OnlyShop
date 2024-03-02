@@ -22,6 +22,18 @@ class IndexView(OrdersCountMixin, ListView):
         return context
 
 
+class OrderSummaryView(OrdersCountMixin, ListView):
+    model = Order
+    template_name = 'checkout.html'
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user, ordered=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
+
 class UserLogIn(LoginView):
     authentication_form = CustomAuthenticationForm
     template_name = 'login.html'
