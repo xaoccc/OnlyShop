@@ -33,23 +33,10 @@
 
                     <p></p>
 
-<!--                    <form class="d-flex justify-content-left">-->
-<!--                        &lt;!&ndash; Default input &ndash;&gt;-->
-<!--                        <div class="form-outline me-1" style="width: 100px;">-->
-<!--                            <input type="number" value="1" class="form-control" />-->
-<!--                        </div>-->
-<!--                        <button class="btn btn-primary ms-1" type="submit">-->
-<!--                            Add to cart-->
-<!--                            <i class="fas fa-shopping-cart ms-1"></i>-->
-<!--                        </button>-->
-<!--                    </form>-->
-
-
                         <a href="{% url 'add-to-cart' pk=object.pk %}" class="btn btn-primary ms-1" type="submit">
                             Add to cart
                             <i class="fas fa-shopping-cart ms-1"></i>
                         </a>
-
 
                         <a href="{% url 'remove-from-cart' pk=object.pk %}" class="btn btn-danger ms-1" type="submit">
                             Remove from cart
@@ -57,24 +44,18 @@
                         </a>
 
                     {% if messages %}
-                    <ul class="messages list-unstyled">
-                        {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-{% endif %}
-
+                        <ul class="messages list-unstyled">
+                            {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
 
                 </div>
-                <!--Content-->
             </div>
-            <!--Grid column-->
         </div>
-        <!--Grid row-->
-
         <hr />
 
-        <!--Grid row-->
         <div class="row d-flex justify-content-center">
             <!--Grid column-->
             <div class="col-md-6 text-center">
@@ -82,9 +63,7 @@
 
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit voluptates, quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
             </div>
-            <!--Grid column-->
         </div>
-        <!--Grid row-->
 
 
         <!--TODO: replace images of other products with images of current product. -->

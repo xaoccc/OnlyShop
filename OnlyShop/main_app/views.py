@@ -1,23 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView, TemplateView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from django.contrib import messages
+from OnlyShop.utils.mixins import OrdersCountMixin
 
-from OnlyShop.profiles.models import AppUser
 
-
-class ItemDetailView(DetailView):
+class ItemDetailView(OrdersCountMixin, DetailView):
     model = Item
     template_name = 'product.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['all_items'] = Item.objects.exclude(id=self.object.id)[:3]
-        context['user'] = AppUser.objects.first()
-        context['orders'] = Order.objects.filter(user=self.request.user, ordered=False)[0].items
+        context['user'] = self.request.user
         return context
-
 
 
 def add_to_cart(request, pk):
@@ -61,6 +59,20 @@ def remove_from_cart(request, pk):
         return redirect("item-details", pk=pk)
 
     return redirect("item-details", pk=pk)
+
+
+class ItemCreateView(OrdersCountMixin, CreateView):
+    template_name = 'add_item.html'
+    model = Item
+    fields = ['name', 'new_price', 'old_price', 'type', 'label', 'label_style', 'image', 'description']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
+    def get_success_url(self):
+        return reverse('index')
 
 
 
