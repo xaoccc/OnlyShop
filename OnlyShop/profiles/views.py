@@ -5,24 +5,20 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from OnlyShop.profiles.forms import CustomAuthenticationForm, CreateUserForm
-from OnlyShop.utils.mixins import OrdersCountMixin
+from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin
 
 UserModel = get_user_model()
 
 
 
-class IndexView(OrdersCountMixin, ListView):
+class IndexView(GetUserMixin, OrdersCountMixin, ListView):
     model = Item
     template_name = 'index.html'
     paginate_by = 8
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
-        return context
 
 
-class OrderSummaryView(OrdersCountMixin, ListView):
+class OrderSummaryView(GetUserMixin, OrdersCountMixin,  ListView):
     model = Order
     template_name = 'checkout.html'
     def get_queryset(self):
@@ -30,8 +26,15 @@ class OrderSummaryView(OrdersCountMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user'] = self.request.user
+        total_cart_amount = 0
+        for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
+            total_cart_amount += item.item.new_price * item.quantity
+
+
+        context['total_cart_amount'] = total_cart_amount
         return context
+
+
 
 
 class UserLogIn(LoginView):
