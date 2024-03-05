@@ -7,13 +7,12 @@ from OnlyShop.profiles.models import AppUser
 from OnlyShop.utils.mixins import InputStyleMixin
 
 
-class CustomAuthenticationForm(InputStyleMixin, AuthenticationForm):
+class UserLoginForm(InputStyleMixin, AuthenticationForm):
     email = forms.EmailField(label='Email', max_length=254)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         del self.fields['username']
-
 
     def clean(self):
         email = self.cleaned_data.get('email')
@@ -25,6 +24,7 @@ class CustomAuthenticationForm(InputStyleMixin, AuthenticationForm):
             else:
                 self.confirm_login_allowed(self.user_cache)
         return self.cleaned_data
+
 
 class CreateUserForm(InputStyleMixin, UserCreationForm):
     class Meta:

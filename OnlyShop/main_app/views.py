@@ -9,7 +9,7 @@ from OnlyShop.utils.mixins import OrdersCountMixin
 
 class ItemDetailView(OrdersCountMixin, DetailView):
     model = Item
-    template_name = 'product.html'
+    template_name = 'product/product.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

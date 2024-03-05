@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
-from OnlyShop.profiles.forms import CustomAuthenticationForm, CreateUserForm
+from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin
 
 UserModel = get_user_model()
@@ -30,17 +30,13 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin,  ListView):
         for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
             total_cart_amount += item.item.new_price * item.quantity
 
-
         context['total_cart_amount'] = total_cart_amount
         return context
 
 
-
-
 class UserLogIn(LoginView):
-    authentication_form = CustomAuthenticationForm
+    authentication_form = UserLoginForm
     template_name = 'login.html'
-    # next_page = 'index'
 
 
 class RegisterView(CreateView):
