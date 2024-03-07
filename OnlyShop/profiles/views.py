@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
-from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm
+from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditForm
+from OnlyShop.profiles.models import Profile
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin
 
 UserModel = get_user_model()
@@ -39,7 +40,20 @@ def user_logout(request):
     return redirect('index')
 
 
+class ProfileDetailView(DetailView):
+    template_name = 'profile/profile-details.html'
+    model = Profile
 
+class ProfileEditView(UpdateView):
+    template_name = 'profile/profile-edit.html'
+    form_class = ProfileEditForm
+
+    def get_success_url(self):
+        return reverse('index')
+
+
+    def get_queryset(self):
+        return Profile.objects.all()
 
 
 

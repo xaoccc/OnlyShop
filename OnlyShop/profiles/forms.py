@@ -39,3 +39,7 @@ class CreateUserForm(InputStyleMixin, UserCreationForm):
         return user
 
 
+class ProfileEditForm(InputStyleMixin, forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'profile_picture']

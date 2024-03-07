@@ -67,3 +67,10 @@ class Profile(models.Model):
     profile_picture = models.URLField(blank=True, null=True)
 
 
+class BillingInfo(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    postal_code = models.CharField(max_length=9, blank=True, null=True)
+    country = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    street_address = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15, validators=[MinLengthValidator(10)])
