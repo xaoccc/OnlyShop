@@ -195,9 +195,14 @@
                     <li class="list-group-item d-flex justify-content-between">
                         <div>
                             <h6 class="my-0">{{ item.item.name }}</h6>
+
                             <small class="text-muted">{{ item.item.description }}</small>
                         </div>
-                        <span class="text-muted">${% widthratio item.item.new_price 1 item.quantity %}</span>
+                        <div class="d-flex text-muted">
+                            <div class="pe-2">{{ item.quantity }} x ${{ item.item.new_price }}:</div>
+                            <div>${% widthratio item.item.new_price 1 item.quantity %}</div>
+                        </div>
+
 
                     </li>
                     {% endfor %}

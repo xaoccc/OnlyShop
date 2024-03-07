@@ -1,7 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin
+from django.core.validators import MinLengthValidator
 from django.db import models
+
+from OnlyShop.profiles.validators import name_validator
 
 
 class CustomUserManager(BaseUserManager):
@@ -25,10 +29,11 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 class AppUser(AbstractBaseUser, PermissionsMixin):
     age = models.PositiveIntegerField(null=True, blank=True)
     email = models.EmailField(unique=True)
-    is_staff = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
 
     objects = CustomUserManager()
@@ -38,4 +43,27 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
+
+class Profile(models.Model):
+    user = models.OneToOneField(AppUser, on_delete=models.CASCADE, primary_key=True)
+    first_name = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        validators=(
+            MinLengthValidator(2, "Your name should be minimum two characters long!"),
+            name_validator,
+        )
+    )
+    last_name = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        validators=(
+            MinLengthValidator(2, "Your name should be minimum two characters long!"),
+            name_validator,
+        )
+    )
+    profile_picture = models.URLField(blank=True, null=True)
+
 

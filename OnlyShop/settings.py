@@ -102,6 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'OnlyShop.profiles.validators.UpperLowerCasePasswordValidator',
+    },
+    {
+        'NAME': 'OnlyShop.profiles.validators.AlphaPasswordValidator',
+    },
 ]
 
 

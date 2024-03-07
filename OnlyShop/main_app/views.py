@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from django.contrib import messages
-from OnlyShop.utils.mixins import OrdersCountMixin
+from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin
 
 
 class ItemDetailView(OrdersCountMixin, DetailView):
@@ -73,6 +73,23 @@ class ItemCreateView(OrdersCountMixin, CreateView):
 
     def get_success_url(self):
         return reverse('index')
+
+
+class OrderSummaryView(GetUserMixin, OrdersCountMixin,  ListView):
+    model = Order
+    template_name = 'checkout.html'
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user, ordered=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        total_cart_amount = 0
+        if Order.objects.filter(user=self.request.user, ordered=False):
+            for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
+                total_cart_amount += item.item.new_price * item.quantity
+
+        context['total_cart_amount'] = total_cart_amount
+        return context
 
 
 

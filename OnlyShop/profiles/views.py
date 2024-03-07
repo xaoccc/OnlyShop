@@ -18,22 +18,6 @@ class IndexView(GetUserMixin, OrdersCountMixin, ListView):
 
 
 
-class OrderSummaryView(GetUserMixin, OrdersCountMixin,  ListView):
-    model = Order
-    template_name = 'checkout.html'
-    def get_queryset(self):
-        return Order.objects.filter(user=self.request.user, ordered=False)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        total_cart_amount = 0
-        for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
-            total_cart_amount += item.item.new_price * item.quantity
-
-        context['total_cart_amount'] = total_cart_amount
-        return context
-
-
 class UserLogIn(LoginView):
     authentication_form = UserLoginForm
     template_name = 'login.html'

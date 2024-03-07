@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate
 from django import forms
 
-from OnlyShop.profiles.models import AppUser
+from OnlyShop.profiles.models import AppUser, Profile
 from OnlyShop.utils.mixins import InputStyleMixin
 
 
@@ -30,5 +30,12 @@ class CreateUserForm(InputStyleMixin, UserCreationForm):
     class Meta:
         model = AppUser
         fields = ['email', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        profile = Profile(user=user)
+        if commit:
+            profile.save()
+        return user
 
 
