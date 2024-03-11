@@ -44,6 +44,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
 
+
 class Profile(models.Model):
     user = models.OneToOneField(AppUser, on_delete=models.CASCADE, primary_key=True)
     first_name = models.CharField(

@@ -138,6 +138,12 @@ color:#263238
     border: solid 1px #BA68C8
 }
 
+.delete-form input {
+    background: rgb(240,240,240);
+    color: rgb(120,120,120);
+    border: solid 1px black;
+}
+
 
 
 

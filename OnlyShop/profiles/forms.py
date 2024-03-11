@@ -1,10 +1,12 @@
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django import forms
 
 from OnlyShop.profiles.models import AppUser, Profile
 from OnlyShop.utils.mixins import InputStyleMixin
+
+UserModel = get_user_model()
 
 
 class UserLoginForm(InputStyleMixin, AuthenticationForm):
@@ -31,6 +33,7 @@ class CreateUserForm(InputStyleMixin, UserCreationForm):
         model = AppUser
         fields = ['email', 'password1', 'password2']
 
+    # Here we create a new Profile instance automatically when creating a user
     def save(self, commit=True):
         user = super().save(commit=commit)
         profile = Profile(user=user)
@@ -43,3 +46,15 @@ class ProfileEditForm(InputStyleMixin, forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'profile_picture']
+
+
+class UserDeleteForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ['email']
+
+    def __init__(self, *args, **kwargs):
+        super(UserDeleteForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['readonly'] = ['readonly']
+
