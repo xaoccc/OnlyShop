@@ -51,7 +51,7 @@ class ProfileEditView(UpdateView):
     form_class = ProfileEditForm
 
     def get_success_url(self):
-        return reverse('index')
+        return reverse('profile-details', kwargs={'pk': self.object.pk})
 
     def get_queryset(self):
         return Profile.objects.all()

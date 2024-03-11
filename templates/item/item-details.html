@@ -55,26 +55,14 @@
             </div>
         </div>
         <hr />
-
-        <div class="row d-flex justify-content-center">
-            <!--Grid column-->
-            <div class="col-md-6 text-center">
-                <h4 class="my-4 h4">Additional information</h4>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus suscipit modi sapiente illo soluta odit voluptates, quibusdam officia. Neque quibusdam quas a quis porro? Molestias illo neque eum in laborum.</p>
+        {% if request.user.is_superuser %}
+            <div class="mt-5 text-center">
+                <a href="{% url 'item-edit' pk=object.pk %}" class="btn btn-primary" type="submit">Edit Item</a>
+                <a href="#" class="btn btn-danger" type="submit">Delete Item</a>
             </div>
-        </div>
+        {% endif %}
 
 
-        <!--TODO: replace images of other products with images of current product. -->
-        <div class="row image-container">
-            {% for item in all_items %}
-                <div class="col-lg-4 col-md-12 mb-4 image-wrapper">
-                    <img class="img-footer" src="{{ item.image }}" class="img-fluid" alt="{{ item.name }}" />
-                </div>
-            {% endfor %}
-        </div>
-        <!--Grid row-->
     </div>
 </main>
 {% endblock %}

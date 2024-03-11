@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
@@ -7,9 +8,9 @@ from django.contrib import messages
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin
 
 
-class ItemDetailView(OrdersCountMixin, DetailView):
+class ItemDetailView(OrdersCountMixin, LoginRequiredMixin, DetailView):
     model = Item
-    template_name = 'product/product.html'
+    template_name = 'item/item-details.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -61,7 +62,7 @@ def remove_from_cart(request, pk):
     return redirect("item-details", pk=pk)
 
 
-class ItemCreateView(OrdersCountMixin, CreateView):
+class ItemCreateView(OrdersCountMixin, LoginRequiredMixin, CreateView):
     template_name = 'add_item.html'
     model = Item
     fields = ['name', 'new_price', 'old_price', 'type', 'label', 'label_style', 'image', 'description']
@@ -75,7 +76,21 @@ class ItemCreateView(OrdersCountMixin, CreateView):
         return reverse('index')
 
 
-class OrderSummaryView(GetUserMixin, OrdersCountMixin,  ListView):
+class ItemEditView(OrdersCountMixin, LoginRequiredMixin, UpdateView):
+    model = Item
+    template_name = "item/item-edit.html"
+    fields = ["name", "old_price", "new_price", "type", "image", "label", "description"]
+
+    def get_success_url(self):
+        return reverse('item-details', kwargs={'pk': self.object.pk})
+
+
+class ItemDeleteView(OrdersCountMixin, LoginRequiredMixin, DeleteView):
+    model = Item
+    template_name = "item-delete.html"
+
+
+class OrderSummaryView(GetUserMixin, OrdersCountMixin, LoginRequiredMixin,  ListView):
     model = Order
     template_name = 'checkout.html'
     def get_queryset(self):

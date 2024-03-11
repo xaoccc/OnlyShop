@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="mt-5 pt-4">
+    <div class="container mt-5">
+
+        <form action="{% url 'item-edit' pk=object.pk %}" method="post">
+
+        </form>
+
+
+    </div>
+</main>
+{% endblock %}
