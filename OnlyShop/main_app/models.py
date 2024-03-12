@@ -26,7 +26,7 @@ class Item(models.Model):
     image = models.URLField()
     label = models.CharField(choices=LABEL_TYPES, blank=True, null=True, max_length=10)
     label_style = models.CharField(choices=LABEL_STYLES, blank=True, null=True, max_length=10)
-    description = models.TextField()
+    description = models.TextField(verbose_name="Description")
 
 
     def __str__(self):

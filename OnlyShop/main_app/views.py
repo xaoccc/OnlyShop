@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -89,6 +90,11 @@ class ItemDeleteView(OnlyShopStaffRequiredMixin, OrdersCountMixin, DeleteView):
     model = Item
     template_name = "item/item-delete.html"
     success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["fake_form_fields"] = self.object._meta.get_fields()
+        return context
 
 
 class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin,  ListView):

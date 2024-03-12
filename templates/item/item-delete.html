@@ -20,6 +20,12 @@
                             <input type="text" value="{{ object.new_price }}" readonly="readonly">
                         </div>
 
+                        {% for field in fake_form_fields %}
+                            <div class="row mt-3">
+                                <label class="labels">{{ field.verbose_name }}</label>
+                                <input type="text" value="{{ fake_object.field.name }}" readonly="readonly">
+                            </div>
+                        {% endfor %}
 
                      <div class="mt-5 text-center">
                         <button class="btn btn-danger" type="submit">Delete Item</button>
