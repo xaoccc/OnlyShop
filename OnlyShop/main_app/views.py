@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
@@ -85,9 +85,10 @@ class ItemEditView(OrdersCountMixin, OnlyShopStaffRequiredMixin, UpdateView):
         return reverse('item-details', kwargs={'pk': self.object.pk})
 
 
-class ItemDeleteView(OrdersCountMixin, OnlyShopStaffRequiredMixin, DeleteView):
+class ItemDeleteView(OnlyShopStaffRequiredMixin, OrdersCountMixin, DeleteView):
     model = Item
-    template_name = "item-delete.html"
+    template_name = "item/item-delete.html"
+    success_url = reverse_lazy('index')
 
 
 class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin,  ListView):

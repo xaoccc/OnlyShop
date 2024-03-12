@@ -1,13 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
 <main class="mt-5 pt-4">
-    <div class="container mt-5">
 
-        <form action="{% url 'item-edit' pk=object.pk %}" method="post">
+            <div class="container rounded bg-white mt-5 mb-5 w-25">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Delete Item</h4>
+                </div>
+                <form class="delete-form" action="{% url 'item-delete' pk=object.pk %}" method="post">
+                    {% csrf_token %}
 
-        </form>
+
+                        <div class="row mt-3">
+                            <label class="labels">Name:</label>
+                            <input type="text" value="{{ object.name }}" readonly="readonly">
+                        </div>
+                        <div class="row mt-3">
+                            <label class="labels">Price:</label>
+                            <input type="text" value="{{ object.new_price }}" readonly="readonly">
+                        </div>
 
 
-    </div>
-</main>
+                     <div class="mt-5 text-center">
+                        <button class="btn btn-danger" type="submit">Delete Item</button>
+                     </div>
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </main>
 {% endblock %}
