@@ -1,12 +1,13 @@
 from django.contrib.auth import logout, get_user_model, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView, TemplateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditForm, UserDeleteForm
 from OnlyShop.profiles.models import Profile
-from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin
+from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginRequiredMixin
 
 UserModel = get_user_model()
 
@@ -42,11 +43,11 @@ def user_logout(request):
     return redirect('index')
 
 
-class ProfileDetailView(DetailView):
+class ProfileDetailView(OnlyShopLoginRequiredMixin, DetailView):
     template_name = 'profile/profile-details.html'
     model = Profile
 
-class ProfileEditView(UpdateView):
+class ProfileEditView(OnlyShopLoginRequiredMixin, UpdateView):
     template_name = 'profile/profile-edit.html'
     form_class = ProfileEditForm
 
@@ -56,7 +57,7 @@ class ProfileEditView(UpdateView):
     def get_queryset(self):
         return Profile.objects.all()
 
-class ProfileDeleteView(DeleteView):
+class ProfileDeleteView(OnlyShopLoginRequiredMixin, DeleteView):
     template_name = 'profile/profile-delete.html'
     form_class = UserDeleteForm
 
@@ -77,7 +78,8 @@ class ProfileDeleteView(DeleteView):
         context['profile'] = Profile.objects.get(user=self.request.user)
         return context
 
-
+class Error_401(TemplateView):
+    template_name = "401.html"
 
 
 

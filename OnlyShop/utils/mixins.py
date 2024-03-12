@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 
 from OnlyShop.main_app.models import Order
 
@@ -25,3 +27,8 @@ class GetUserMixin:
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
         return context
+
+
+class OnlyShopLoginRequiredMixin(LoginRequiredMixin):
+    def handle_no_permission(self):
+        return redirect('error_401')
