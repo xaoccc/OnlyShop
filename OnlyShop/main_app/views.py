@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from django.contrib import messages
-from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin
+from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopStaffRequiredMixin, OnlyShopLoginRequiredMixin
 
 
 class ItemDetailView(OrdersCountMixin, LoginRequiredMixin, DetailView):
@@ -62,7 +62,7 @@ def remove_from_cart(request, pk):
     return redirect("item-details", pk=pk)
 
 
-class ItemCreateView(OrdersCountMixin, LoginRequiredMixin, CreateView):
+class ItemCreateView(OrdersCountMixin, OnlyShopStaffRequiredMixin, CreateView):
     template_name = 'add_item.html'
     model = Item
     fields = ['name', 'new_price', 'old_price', 'type', 'label', 'label_style', 'image', 'description']
@@ -76,7 +76,7 @@ class ItemCreateView(OrdersCountMixin, LoginRequiredMixin, CreateView):
         return reverse('index')
 
 
-class ItemEditView(OrdersCountMixin, LoginRequiredMixin, UpdateView):
+class ItemEditView(OrdersCountMixin, OnlyShopStaffRequiredMixin, UpdateView):
     model = Item
     template_name = "item/item-edit.html"
     fields = ["name", "old_price", "new_price", "type", "image", "label", "description"]
@@ -85,12 +85,12 @@ class ItemEditView(OrdersCountMixin, LoginRequiredMixin, UpdateView):
         return reverse('item-details', kwargs={'pk': self.object.pk})
 
 
-class ItemDeleteView(OrdersCountMixin, LoginRequiredMixin, DeleteView):
+class ItemDeleteView(OrdersCountMixin, OnlyShopStaffRequiredMixin, DeleteView):
     model = Item
     template_name = "item-delete.html"
 
 
-class OrderSummaryView(GetUserMixin, OrdersCountMixin, LoginRequiredMixin,  ListView):
+class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin,  ListView):
     model = Order
     template_name = 'checkout.html'
     def get_queryset(self):

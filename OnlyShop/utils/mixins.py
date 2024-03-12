@@ -1,7 +1,5 @@
-from django import forms
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-
 from OnlyShop.main_app.models import Order
 
 
@@ -32,3 +30,12 @@ class GetUserMixin:
 class OnlyShopLoginRequiredMixin(LoginRequiredMixin):
     def handle_no_permission(self):
         return redirect('error_401')
+
+class OnlyShopStaffRequiredMixin(LoginRequiredMixin):
+    def handle_no_permission(self):
+        return redirect('error_401')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)

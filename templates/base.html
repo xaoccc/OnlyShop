@@ -64,9 +64,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'checkout' %}">Checkout</a>
         </li>
-<!--       This developer is a lazy and strange guy, and he wants to be able to add items though the template, so
-           he added this functionality-->
-        {% if user.is_superuser %}
+        {% if user.is_staff %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'add_item' %}">Add Item</a>
           </li>
