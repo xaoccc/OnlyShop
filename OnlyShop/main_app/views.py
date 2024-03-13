@@ -1,10 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
-
 from OnlyShop.main_app.forms import ItemDeleteForm
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from django.contrib import messages
@@ -89,10 +87,14 @@ class ItemEditView(OrdersCountMixin, OnlyShopStaffRequiredMixin, UpdateView):
 
 
 class ItemDeleteView(OnlyShopStaffRequiredMixin, OrdersCountMixin, DeleteView):
+    # We cannot use both model and form, we must choose one of them
+    # As you can see, we use the model for the DeleteView, not the form
+    # form_valid in the BaseDeleteView deletes the model instance.
     model = Item
     template_name = "item/item-delete.html"
     success_url = reverse_lazy('index')
 
+    # Here we use only the data (values and labels) from the form. The submission uses the model!
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ItemDeleteForm(initial=self.object.__dict__)

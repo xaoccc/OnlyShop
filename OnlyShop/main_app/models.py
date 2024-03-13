@@ -4,9 +4,11 @@ from django.conf import settings
 # Create your models here.
 class Item(models.Model):
     ITEM_TYPES = (
-        ('Shirt', 'Shirt'),
-        ('Outwear', 'Outwear'),
-        ('Sport wear', 'Sport wear'),
+        ('Small', 'Small'),
+        ('Medium', 'Medium'),
+        ('Big', 'Big'),
+        ('VeryBig', 'VeryBig'),
+        ('Abstract', 'Abstract'),
     )
 
     LABEL_TYPES = (

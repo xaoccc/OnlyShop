@@ -1,5 +1,4 @@
 from django.contrib.auth import logout, get_user_model, login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -12,12 +11,23 @@ from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginR
 UserModel = get_user_model()
 
 
-
 class IndexView(GetUserMixin, OrdersCountMixin, ListView):
     model = Item
     template_name = 'index.html'
     paginate_by = 8
 
+    def get_queryset(self):
+        queryset = Item.objects.all()
+        filter_by_item_name = self.request.GET.get("item_name", None)
+
+        if filter_by_item_name:
+            queryset = queryset.filter(name__icontains=filter_by_item_name)
+
+        filter_by_item_type = self.request.GET.get("item_type", None)
+        if filter_by_item_type:
+            queryset = Item.objects.filter(type__iexact=filter_by_item_type)
+
+        return queryset
 
 
 class UserLogIn(LoginView):

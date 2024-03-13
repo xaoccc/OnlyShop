@@ -93,10 +93,6 @@ color:#263238
     width: 20em;
 }
 
-
-
-
-
 .form-control:focus {
     box-shadow: none;
     border-color: #BA68C8
@@ -143,9 +139,6 @@ color:#263238
     color: rgb(120,120,120);
     border: solid 1px black;
 }
-
-
-
 
 @media only screen and (max-width: 600px) {
     .login-form, .register-form {
