@@ -9,21 +9,10 @@
                 </div>
                 <form class="delete-form" action="{% url 'item-delete' pk=object.pk %}" method="post">
                     {% csrf_token %}
-
-
-                        <div class="row mt-3">
-                            <label class="labels">Name:</label>
-                            <input type="text" value="{{ object.name }}" readonly="readonly">
-                        </div>
-                        <div class="row mt-3">
-                            <label class="labels">Price:</label>
-                            <input type="text" value="{{ object.new_price }}" readonly="readonly">
-                        </div>
-
-                        {% for field in fake_form_fields %}
+                        {% for field in form %}
                             <div class="row mt-3">
-                                <label class="labels">{{ field.verbose_name }}</label>
-                                <input type="text" value="{{ fake_object.field.name }}" readonly="readonly">
+                                <label class="labels">{{ field.label }}</label>
+                                <input type="text" value="{{ field.value }}" readonly="readonly">
                             </div>
                         {% endfor %}
 

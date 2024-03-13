@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
+
+from OnlyShop.main_app.forms import ItemDeleteForm
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from django.contrib import messages
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopStaffRequiredMixin, OnlyShopLoginRequiredMixin
@@ -93,7 +95,7 @@ class ItemDeleteView(OnlyShopStaffRequiredMixin, OrdersCountMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fake_form_fields"] = self.object._meta.get_fields()
+        context['form'] = ItemDeleteForm(initial=self.object.__dict__)
         return context
 
 
