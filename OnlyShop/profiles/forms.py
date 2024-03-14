@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, get_user_model
 from django import forms
 
-from OnlyShop.profiles.models import AppUser, Profile
+from OnlyShop.profiles.models import AppUser, Profile, BillingInfo
 from OnlyShop.utils.mixins import InputStyleMixin
 
 UserModel = get_user_model()
@@ -57,4 +57,22 @@ class UserDeleteForm(forms.ModelForm):
         super(UserDeleteForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['readonly'] = ['readonly']
+
+
+class BillingInfoForm(forms.ModelForm):
+    class Meta:
+        model = BillingInfo
+        fields = ["postal_code", "country", "city", "street_address", "phone_number"]
+
+    def __init__(self, *args, **kwargs):
+        user_profile = kwargs.pop('user_profile', None)
+        super().__init__(*args, **kwargs)
+        if user_profile:
+            self.instance.profile = user_profile
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if commit:
+            instance.save()
+        return instance
 

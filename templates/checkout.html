@@ -18,7 +18,7 @@
                             <!--firstName-->
                             <div class="form-outline">
                                 <input type="text" id="first-name" class="form-control" />
-                                <label class="form-label" for="first-name">First name</label>
+                                <label class="form-label" for="first-name">First name: {{ request.user.profile.first_name }}</label>
                             </div>
                         </div>
                         <!--Grid column-->
@@ -28,7 +28,7 @@
                             <!--lastName-->
                             <div class="form-outline">
                                 <input type="text" id="last-name" class="form-control" />
-                                <label class="form-label" for="last-name">Last name</label>
+                                <label class="form-label" for="last-name">Last name: {{ request.user.profile.last_name }}</label>
                             </div>
                         </div>
                         <!--Grid column-->
@@ -36,10 +36,16 @@
                     <!--Grid row-->
 
                     <!--Username-->
-                    <div class="input-group mb-4">
-                        <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
-                    </div>
+                     <div class="form-outline">
+                                <input type="text" id="email" class="form-control" />
+                                <label class="form-label" for="email">E-mail: {{ request.user.email }}</label>
+                     </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ billing_info_form.as_div }}
+                        <button type="submit">Finish order</button>
+                    </form>
 
                     <!--email-->
                     <p class="mb-0">

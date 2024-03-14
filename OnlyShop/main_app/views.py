@@ -6,6 +6,9 @@ from django.views.generic import ListView, DetailView, DeleteView, UpdateView, C
 from OnlyShop.main_app.forms import ItemDeleteForm
 from OnlyShop.main_app.models import Item, Order, ItemOrder
 from django.contrib import messages
+
+from OnlyShop.profiles.forms import BillingInfoForm
+from OnlyShop.profiles.models import BillingInfo
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopStaffRequiredMixin, OnlyShopLoginRequiredMixin
 
 
@@ -115,7 +118,19 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
                 total_cart_amount += item.item.new_price * item.quantity
 
         context['total_cart_amount'] = total_cart_amount
+        context['billing_info_form'] = BillingInfoForm(user_profile=self.request.user.profile)
+
         return context
+
+    def post(self, request, *args, **kwargs):
+        billing_info_form = BillingInfoForm(request.POST, user_profile=request.user.profile)
+        if billing_info_form.is_valid():
+            billing_info_form.save()
+            return redirect('index') # TODO: REPLACE WITH SUCCESS PAGE
+        else:
+            context = self.get_context_data()
+            context['billing_info_form'] = billing_info_form
+            return self.render_to_response(context)
 
 
 

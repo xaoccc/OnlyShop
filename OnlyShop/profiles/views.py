@@ -53,11 +53,11 @@ def user_logout(request):
     return redirect('index')
 
 
-class ProfileDetailView(OnlyShopLoginRequiredMixin, DetailView):
+class ProfileDetailView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView):
     template_name = 'profile/profile-details.html'
     model = Profile
 
-class ProfileEditView(OnlyShopLoginRequiredMixin, UpdateView):
+class ProfileEditView(OnlyShopLoginRequiredMixin, OrdersCountMixin, UpdateView):
     template_name = 'profile/profile-edit.html'
     form_class = ProfileEditForm
 
@@ -67,7 +67,7 @@ class ProfileEditView(OnlyShopLoginRequiredMixin, UpdateView):
     def get_queryset(self):
         return Profile.objects.all()
 
-class ProfileDeleteView(OnlyShopLoginRequiredMixin, DeleteView):
+class ProfileDeleteView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DeleteView):
     template_name = 'profile/profile-delete.html'
     form_class = UserDeleteForm
 

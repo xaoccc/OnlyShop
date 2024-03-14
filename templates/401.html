@@ -5,7 +5,13 @@
 <main>
     <div class="flex-row justify-content-center mt-5">
         <h3 class="d-flex justify-content-center text-danger">You have no permission to see this content!</h3>
-        <p class="d-flex justify-content-center">Please log in&nbsp;<a href="{% url 'login' %}">here</a></p>
+        {% if not request.user.is_authenticated %}
+            <p class="d-flex justify-content-center">Please log in&nbsp;<a href="{% url 'login' %}">here</a></p>
+        {% else %}
+            <p class="d-flex justify-content-center">
+                <a class="btn btn-primary" href="{% url 'index' %}">Return to home page</a>
+            </p>
+        {% endif %}
         <div class="col-sm-12 text-center">
             <img class="block" src="{% static 'img/401.jpg' %}" alt="error-401" />
         </div>
