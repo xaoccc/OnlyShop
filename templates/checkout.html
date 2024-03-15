@@ -41,6 +41,8 @@
                                 <label class="form-label" for="email">E-mail: {{ request.user.email }}</label>
                      </div>
 
+                    {{ request.user.profile.biling }}
+
                     <form method="post">
                         {% csrf_token %}
                         {{ billing_info_form.as_div }}

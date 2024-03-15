@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     'OnlyShop.main_app',
     'OnlyShop.profiles',
+    'OnlyShop.order',
 ]
 
 

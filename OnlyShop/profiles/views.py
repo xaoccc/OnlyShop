@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView, TemplateView
-from OnlyShop.main_app.models import Item, Order, ItemOrder
+from OnlyShop.main_app.models import Item
 from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditForm, UserDeleteForm
 from OnlyShop.profiles.models import Profile
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginRequiredMixin

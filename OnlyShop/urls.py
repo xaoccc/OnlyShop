@@ -8,4 +8,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('item/', include('OnlyShop.main_app.urls')),
     path('', include('OnlyShop.profiles.urls')),
+    # path('order/', include('OnlyShop.order.urls')),
 ]

@@ -1,5 +1,7 @@
 from django.contrib import admin
-from OnlyShop.main_app.models import Item, ItemOrder, Order
+from OnlyShop.main_app.models import Item, ItemOrder
+from OnlyShop.order.models import Order
+
 
 @admin.register(Item)
 # Register your models here.

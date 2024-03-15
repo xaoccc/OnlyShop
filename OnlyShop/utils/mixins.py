@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from OnlyShop.main_app.models import Order
+
+from OnlyShop.order.models import Order
 
 
 class OrdersCountMixin:
