@@ -130,6 +130,8 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
             billing_info_form.save()
             current_order = Order.objects.filter(user=self.request.user, ordered=False)[0]
             current_order.ordered = True
+            current_billing_info = BillingInfo.objects.last()
+            current_order.billing_info = current_billing_info
             current_order.save()
             return redirect('index') # TODO: REPLACE WITH SUCCESS PAGE
         else:

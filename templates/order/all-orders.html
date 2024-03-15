@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="d-flex flex-column align-items-left ms-5">
+        <div class="p-1">First Name: {{ request.user.profile.first_name }}</div>
+        <div class="p-1">Last Name: {{ request.user.profile.last_name }}</div>
+        <hr/>
+        {% for order in object_list %}
+            <div class="p-1">Billing Address: {{ order.billing_info.country }}  {{ order.billing_info.postal_code }} {{ order.billing_info.city }} {{ order.billing_info.street_address }}</div>
+            <div class="p-1">Email: {{ order.user }}</div>
+            <div class="p-1">Phone Number: {{ order.billing_info.phone_number }}</div>
+            <hr/>
+        {% endfor %}
+    </div>
+</div>
+
+</main>
+{% endblock %}
