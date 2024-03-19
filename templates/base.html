@@ -112,10 +112,9 @@
 <!-- Navbar -->
 
 <!-- carousel -->
-<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-mdb-ride="carousel">
-  <div class="carousel-inner">
+
+  <div class="carousel-inner header-container">
     <div class="carousel-item active">
-      <img src="{% static 'img/main-theme.jpg' %}" class="d-block main-img" alt="Animated shopping cart on a orange background"/>
       <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
       <div class="carousel-caption d-none d-sm-block ">
               <h1 class="mb-4">
@@ -132,8 +131,8 @@
       </div>
     </div>
   </div>
-  </div>
-  {% block content %}
+
+{% block content %}
 {% endblock  %}
 <footer class="text-center text-white mt-4" style="background-color: #607D8B">
 

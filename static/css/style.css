@@ -62,9 +62,10 @@ color:#263238
     color: red;
 }
 
-.main-img {
-        width: 100%;
-    }
+.header-container{
+    background-image: url("../img/main-theme.jpg");
+    background-size: cover;
+}
 
 .card-container {
     margin-top: 2em;
