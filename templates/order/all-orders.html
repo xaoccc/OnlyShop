@@ -3,14 +3,22 @@
 <main>
 
 <div class="container rounded bg-white mt-5 mb-5">
+    <h2 class="my-5 text-center">Your orders</h2>
     <div class="d-flex flex-column align-items-left ms-5">
         <div class="p-1">First Name: {{ request.user.profile.first_name }}</div>
         <div class="p-1">Last Name: {{ request.user.profile.last_name }}</div>
+        <div class="p-1">Email: {{ request.user.email }}</div>
         <hr/>
         {% for order in object_list %}
+            <div class="p-1">Order {{ forloop.counter }}</div>
             <div class="p-1">Billing Address: {{ order.billing_info.country }}  {{ order.billing_info.postal_code }} {{ order.billing_info.city }} {{ order.billing_info.street_address }}</div>
-            <div class="p-1">Email: {{ order.user }}</div>
             <div class="p-1">Phone Number: {{ order.billing_info.phone_number }}</div>
+            <div class="p-1">Items ordered:</div>
+            {% for item_order in order.items.all %}
+                <div class="p-1">{{ item_order.quantity }} x {{ item_order.item }}: ${% widthratio item_order.quantity 1 item_order.item.new_price %}</div>
+            {% endfor %}
+            <div class="p-1">Total amount: ${{ order.total_order_amount }}</div>
+            <a href="{% url 'order_details' pk=order.pk %}" class="btn btn-outline-secondary">More Details</a>
             <hr/>
         {% endfor %}
     </div>

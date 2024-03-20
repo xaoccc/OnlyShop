@@ -1,4 +1,6 @@
 from django.views.generic import ListView, DetailView, TemplateView
+
+from OnlyShop.main_app.models import ItemOrder
 from OnlyShop.order.models import Order
 from OnlyShop.profiles.models import BillingInfo
 from OnlyShop.utils.mixins import OrdersCountMixin, OnlyShopLoginRequiredMixin
@@ -17,12 +19,16 @@ class AllOrdersView(OnlyShopLoginRequiredMixin, OrdersCountMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         context["billing_info"] = BillingInfo.objects.filter(profile=self.request.user.profile)
+
+        for order in Order.objects.filter(user=self.request.user):
+            for item in order.items.all():
+                order.total_order_amount += item.quantity * item.item.new_price
+            order.save()
 
         return context
 
-class OrderDetailView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView):
+class OrderDetailsView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView):
     model = Order
     template_name = "order/order-details.html"
 

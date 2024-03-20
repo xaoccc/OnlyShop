@@ -13,6 +13,7 @@ class Order(models.Model):
     items = models.ManyToManyField(ItemOrder)
     start_date = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField()
+    total_order_amount = models.IntegerField(default=0)
 
     def __str__(self):
         return f"Order {self.pk} of user {self.user}"
