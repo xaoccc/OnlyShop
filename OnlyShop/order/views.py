@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from OnlyShop.order.models import Order
 from OnlyShop.profiles.models import BillingInfo
 from OnlyShop.utils.mixins import OrdersCountMixin, OnlyShopLoginRequiredMixin
@@ -25,3 +25,7 @@ class AllOrdersView(OnlyShopLoginRequiredMixin, OrdersCountMixin, ListView):
 class OrderDetailView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView):
     model = Order
     template_name = "order/order-details.html"
+
+
+class OrderCompleteView(OnlyShopLoginRequiredMixin, OrdersCountMixin, TemplateView):
+    template_name = "order/order-success.html"

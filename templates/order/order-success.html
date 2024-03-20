@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+    <div class="container">
+        <h2 class="my-5 text-center">You have successfully completed your order!</h2>
+        <h3 class="my-5 text-center">Thank you for shopping with us!</h3>
+
+        <div class="row md-5 my-5 text-center">
+            <a href="{% url 'index' %}">Continue shopping</a>
+        </div>
+
+    </div>
+</main>
+{% endblock %}

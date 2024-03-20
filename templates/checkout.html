@@ -15,39 +15,35 @@
                     <div class="row mb-3">
                         <!--Grid column-->
                         <div class="col-md-6 mb-2">
-                            <!--firstName-->
                             <div class="form-outline">
-                                <input type="text" id="first-name" class="form-control" />
-                                <label class="form-label" for="first-name">First name: {{ request.user.profile.first_name }}</label>
+                                First name: {{ request.user.profile.first_name }}
                             </div>
                         </div>
-                        <!--Grid column-->
 
-                        <!--Grid column-->
                         <div class="col-md-6 mb-2">
-                            <!--lastName-->
                             <div class="form-outline">
-                                <input type="text" id="last-name" class="form-control" />
-                                <label class="form-label" for="last-name">Last name: {{ request.user.profile.last_name }}</label>
+                                Last name: {{ request.user.profile.last_name }}
                             </div>
                         </div>
-                        <!--Grid column-->
+
+                        <div class="col-md-6 mb-2">
+                            <div class="form-outline">
+                                Email: {{ request.user.email }}
+                            </div>
+                        </div>
                     </div>
 
-                        {{ request.user.profile.biling }}
-
-                        <form  method="post">
-                        {% csrf_token %}
-                        {% for field in billing_info_form %}
-                            <div class="row mt-1" data-mdb-input-init>
-                                {{ field.errors }}
-                                {{ field.label_tag }}
-                                <label class="form-label checkout-form" for="{{ field.id_for_label }}">{{ field }}</label>
-                            </div>
-                        {% endfor %}
-
-                        <button class="btn btn-primary" type="button">Finish Order</button>
-                    </form>
+                        <form  method="post" action="{% url 'checkout' %}">
+                            {% csrf_token %}
+                            {% for field in billing_info_form %}
+                                <div class="row mt-1" data-mdb-input-init>
+                                    {{ field.errors }}
+                                    {{ field.label_tag }}
+                                    <label class="form-label checkout-form" for="{{ field.id_for_label }}">{{ field }}</label>
+                                </div>
+                            {% endfor %}
+                            <button class="btn btn-primary" type="submit">Finish Order</button>
+                        </form>
 
                     </div>
 

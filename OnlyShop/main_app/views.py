@@ -118,9 +118,9 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
             for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
                 total_cart_amount += item.item.new_price * item.quantity
 
-
         context['total_cart_amount'] = total_cart_amount
         context['billing_info_form'] = BillingInfoForm(user_profile=self.request.user.profile)
+        context['current_order'] = Order.objects.filter(user=self.request.user)
 
         return context
 
@@ -133,7 +133,7 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
             current_billing_info = BillingInfo.objects.last()
             current_order.billing_info = current_billing_info
             current_order.save()
-            return redirect('index') # TODO: REPLACE WITH SUCCESS PAGE
+            return redirect('order_completed')
         else:
             context = self.get_context_data()
             context['billing_info_form'] = billing_info_form
