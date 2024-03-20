@@ -25,95 +25,122 @@
   </head>
   <body>
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
 
-  <div class="container">
 
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent1"
-      aria-controls="navbarSupportedContent1"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
 
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-      <!-- Navbar brand -->
-      <a class="navbar-brand mt-2 mt-sm-0" href="{% url 'index' %}">
-        <img
-          src="{% static 'img/bag-heart-fill.svg' %}"
-          height="20"
-          alt="OnlyShop Logo"
-          loading="lazy"
-        />
-      </a>
-      {% if user.is_authenticated %}
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item active">
-          <a class="nav-link " href="{% url 'index' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'profile-details' pk=request.user.pk %}">Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'checkout' %}">Checkout</a>
-        </li>
-        {% if user.is_staff %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_item' %}">Add Item</a>
-          </li>
+      <script>
+        import { Collapse, initMDB } from "mdb-ui-kit";
+        initMDB({ Collapse });
+      </script>
+
+      <div class="container">
+        <button
+          data-mdb-collapse-init
+          class="navbar-toggler"
+          type="button"
+          data-mdb-target="#navbarToggleExternalContent1"
+          aria-controls="navbarToggleExternalContent1"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="collapse" id="navbarToggleExternalContent1">
+          {% if user.is_authenticated %}
+            <ul class="navbar-nav me-auto mb-2 mt-0 mb-lg-0 dropdown-menu rounded-0" >
+              <li class="dropdown-item" >
+                <a class="nav-link " href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="dropdown-item">
+                <a class="nav-link" href="{% url 'profile-details' pk=request.user.pk %}">Profile</a>
+              </li>
+              <li class="dropdown-item">
+                <a class="nav-link" href="{% url 'checkout' %}">Checkout</a>
+              </li>
+
+              {% if user.is_staff %}
+                <li class="dropdown-item">
+                  <a class="nav-link" href="{% url 'add_item' %}">Add Item</a>
+                </li>
+              {% endif %}
+            </ul>
+          {% endif %}
+
+        </div>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+          <!-- Navbar brand -->
+          <a class="navbar-brand mt-2 mt-sm-0" href="{% url 'index' %}">
+            <img
+              src="{% static 'img/bag-heart-fill.svg' %}"
+              height="20"
+              alt="OnlyShop Logo"
+              loading="lazy"
+            />
+          </a>
+          {% if user.is_authenticated %}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link " href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile-details' pk=request.user.pk %}">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'checkout' %}">Checkout</a>
+              </li>
+
+              {% if user.is_staff %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'add_item' %}">Add Item</a>
+                </li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+      <div class="d-flex align-items-center">
+        {% if user.is_authenticated %}
+          <a class="nav-link me-3" href="{% url 'checkout' %}">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge rounded-pill badge-notification bg-danger">{{ orders.count }}</span>
+          </a>
         {% endif %}
-      </ul>
-      {% endif %}
-      <!-- Left links -->
-    </div>
-    <!-- Collapsible wrapper -->
 
-    <div class="d-flex align-items-center">
-      {% if user.is_authenticated %}
-        <a class="nav-link me-3" href="{% url 'checkout' %}">
-          <i class="fas fa-shopping-cart"></i>
-          <span class="badge rounded-pill badge-notification bg-danger">{{ orders.count }}</span>
+        <a class="nav-link me-3" href="https://www.facebook.com/georgi.tashev">
+          <i class="fab fa-facebook-f"></i>
         </a>
-      {% endif %}
+        <a class="nav-link me-3" href="https://www.linkedin.com/in/georgi-tashev-3aab33a/">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/xaoccc" class="nav-link me-3" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
 
-      <a class="nav-link me-3" href="https://www.facebook.com/georgi.tashev">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a class="nav-link me-3" href="https://www.linkedin.com/in/georgi-tashev-3aab33a/">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="https://github.com/xaoccc" class="nav-link me-3" target="_blank">
-        <i class="fab fa-github"></i>
-      </a>
+        {% if user.is_authenticated %}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link " href="{% url 'logout' %}">Log Out</a>
+            </li>
+          </ul>
+        {% else %}
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link " href="{% url 'login' %}">Log In</a>
+            </li>
+         </ul>
+        {% endif %}
 
-      {% if user.is_authenticated %}
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link " href="{% url 'logout' %}">Log Out</a>
-          </li>
-        </ul>
-      {% else %}
-       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link " href="{% url 'login' %}">Log In</a>
-          </li>
-       </ul>
-      {% endif %}
+        </div>
+      </div>
+    </nav>
 
-    </div>
-  </div>
-</nav>
-<!-- Navbar -->
-
-<!-- carousel -->
-
-  <div class="carousel-inner header-container">
+    <div class="carousel-inner header-container">
     <div class="carousel-item active">
       <div class="mask" style="background-color: rgba(0, 0, 0, 0.4)"></div>
       <div class="carousel-caption d-none d-sm-block ">
@@ -134,9 +161,9 @@
 
 {% block content %}
 {% endblock  %}
-<footer class="text-center text-white mt-4" style="background-color: #607D8B">
+<footer class="fixed-bottom text-center text-white" style="background-color: #607D8B">
 
-  <hr class="text-dark">
+  <hr class="text-dark mt-0">
 
   <div class="container">
     <!-- Section: Social media -->

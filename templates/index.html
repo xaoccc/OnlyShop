@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <main>
+
   <div class="container">
     <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark mt-3 shadow p-2" style="background-color: #607D8B">
@@ -8,24 +9,52 @@
     <div class="container-fluid">
 
       <!-- Navbar brand -->
-      <a class="navbar-brand" href="#">Types of products:</a>
+
 
       <!-- Toggle button -->
       <button
-         class="navbar-toggler"
-         type="button"
-         data-mdb-toggle="collapse"
-         data-mdb-target="#navbarSupportedContent2"
-         aria-controls="navbarSupportedContent2"
-         aria-expanded="false"
-         aria-label="Toggle navigation">
+          data-mdb-collapse-init
+          class="navbar-toggler"
+          type="button"
+          data-mdb-target="#navbarToggleExternalContent2"
+          aria-controls="navbarToggleExternalContent2"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
         <i class="fas fa-bars"></i>
       </button>
 
+        <div class="collapse" id="navbarToggleExternalContent2">
+
+            <ul class="navbar-nav me-auto mb-2 mt-0 mb-lg-0 dropdown-menu rounded-0"  style="background-color: #607D8B">
+              <li class="dropdown-item">
+                <a class="nav-link text-white" href="?item_type=Small">Small</a>
+              </li>
+              <li class="dropdown-item">
+                <a class="nav-link text-white" href="?item_type=Medium">Medium</a>
+              </li>
+              <li class="dropdown-item">
+                <a class="nav-link text-white" href="?item_type=Big">Big</a>
+              </li>
+              <li class="dropdown-item">
+                <a class="nav-link text-white" href="?item_type=VeryBig">Very Big</a>
+              </li>
+              <li class="dropdown-item">
+                <a class="nav-link text-white" href="?item_type=Abstract">Abstract</a>
+              </li>
+            </ul>
+
+        </div>
+
+        <form class="w-auto py-1 d-flex" method="get" action="{% url 'index' %}">
+          <input type="search" name="item_name" class="form-control rounded-0" placeholder="Search by item name" aria-label="Search">
+          <button class="btn btn-info ms-3" type="submit">Search</button>
+        </form>
       <!-- Collapsible wrapper -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent2">
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="ms-5 navbar-brand">Filter by item type:</li>
           <!-- Link -->
           <li class="nav-item">
             <a class="nav-link text-white" href="?item_type=Small">Small</a>
@@ -47,17 +76,12 @@
         <!-- Search -->
 
 
-        <form class="w-auto py-1 d-flex" method="get" action="{% url 'index' %}">
-          <input type="search" name="item_name" class="form-control rounded-0" placeholder="Search by item name" aria-label="Search">
-          <button class="btn btn-info ms-3" type="submit">Search</button>
-        </form>
-
       </div>
     </div>
     <!-- Container wrapper -->
   </nav>
     <section>
-    <div class="container">
+      <div class="container">
       <div class="row">
 
           {% for object in object_list %}
@@ -124,7 +148,7 @@
 
         </div>
       </div>
-  </section>
+    </section>
 
   <!-- Pagination -->
     {% if is_paginated %}
@@ -171,13 +195,9 @@
         {% endif %}
       </ul>
     </nav>
-  {% endif %}
+    {% endif %}
 
   </div>
-
-
-
-
 
 </main>
 {% endblock %}
