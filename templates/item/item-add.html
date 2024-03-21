@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <main>
-    <form class="register-form add-item" action="{% url 'add_item' %}" method="post">
+    <form class="register-form add-item" action="{% url 'item-add' %}" method="post">
         {% csrf_token %}
         {{ form.as_div }}
 

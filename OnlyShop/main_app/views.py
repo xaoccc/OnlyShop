@@ -68,7 +68,7 @@ def remove_from_cart(request, pk):
 
 
 class ItemCreateView(OrdersCountMixin, OnlyShopStaffRequiredMixin, CreateView):
-    template_name = 'add_item.html'
+    template_name = 'item/item-add.html'
     model = Item
     fields = ['name', 'new_price', 'old_price', 'type', 'label', 'label_style', 'image', 'description']
 

@@ -62,7 +62,7 @@
 
               {% if user.is_staff %}
                 <li class="dropdown-item">
-                  <a class="nav-link" href="{% url 'add_item' %}">Add Item</a>
+                  <a class="nav-link" href="{% url 'item-add' %}">Add Item</a>
                 </li>
               {% endif %}
             </ul>
@@ -95,7 +95,7 @@
 
               {% if user.is_staff %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'add_item' %}">Add Item</a>
+                  <a class="nav-link" href="{% url 'item-add' %}">Add Item</a>
                 </li>
               {% endif %}
             </ul>
@@ -161,6 +161,7 @@
 
 {% block content %}
 {% endblock  %}
+<div class="clear"></div>
 <footer class="fixed-bottom text-center text-white" style="background-color: #607D8B">
 
   <hr class="text-dark mt-0">

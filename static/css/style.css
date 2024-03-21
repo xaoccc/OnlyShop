@@ -146,6 +146,11 @@ color:#263238
     margin-bottom: 1em
 }
 
+.clear {
+    clear: both;
+    height: 80px;
+}
+
 @media only screen and (max-width: 600px) {
     .login-form, .register-form {
         max-width: 20em;
