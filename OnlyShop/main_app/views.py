@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView, FormView, TemplateView
 from OnlyShop.main_app.forms import ItemDeleteForm
 from OnlyShop.main_app.models import Item, ItemOrder
 from django.contrib import messages
@@ -105,9 +105,10 @@ class ItemDeleteView(OnlyShopStaffRequiredMixin, OrdersCountMixin, DeleteView):
         return context
 
 
-class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin,  ListView):
+class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, ListView, FormView):
     model = Order
     template_name = 'checkout.html'
+    form_class = BillingInfoForm
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user, ordered=False)
 
@@ -117,27 +118,47 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
         if Order.objects.filter(user=self.request.user, ordered=False):
             for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
                 total_cart_amount += item.item.new_price * item.quantity
-
         context['total_cart_amount'] = total_cart_amount
-        context['billing_info_form'] = BillingInfoForm(user_profile=self.request.user.profile)
         context['current_order'] = Order.objects.filter(user=self.request.user)
-
         return context
 
     def post(self, request, *args, **kwargs):
         billing_info_form = BillingInfoForm(request.POST, user_profile=request.user.profile)
+
         if billing_info_form.is_valid():
             billing_info_form.save()
+            current_billing_info = BillingInfo.objects.last()
+            if not Order.objects.filter(user=self.request.user, ordered=False):
+                return redirect('order_unavailable')
+
             current_order = Order.objects.filter(user=self.request.user, ordered=False)[0]
             current_order.ordered = True
-            current_billing_info = BillingInfo.objects.last()
             current_order.billing_info = current_billing_info
+            total_cart_amount = 0
+            if Order.objects.filter(user=self.request.user, ordered=False):
+                for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
+                    total_cart_amount += item.item.new_price * item.quantity
+
+            current_order.total_order_amount = total_cart_amount
+
             current_order.save()
             return redirect('order_completed')
         else:
             context = self.get_context_data()
-            context['billing_info_form'] = billing_info_form
+
             return self.render_to_response(context)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if BillingInfo.objects.filter(profile=self.request.user.profile):
+            last_instance = BillingInfo.objects.filter(profile=self.request.user.profile).last()
+            kwargs['instance'] = last_instance
+        return kwargs
+
+
+
+
+
 
 
 

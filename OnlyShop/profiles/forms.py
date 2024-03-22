@@ -67,12 +67,17 @@ class BillingInfoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user_profile = kwargs.pop('user_profile', None)
         super().__init__(*args, **kwargs)
-        if user_profile:
+        if BillingInfo.objects.filter(profile=user_profile):
+            self.instance = BillingInfo.objects.filter(profile=user_profile).last()
+        else:
             self.instance.profile = user_profile
+
 
     def save(self, commit=True):
         instance = super().save(commit=False)
         if commit:
             instance.save()
         return instance
+
+
 

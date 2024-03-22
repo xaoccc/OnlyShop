@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<main>
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="d-flex flex-column text-center ms-5">
+        You have no items in your shopping cart!
+    </div>
+    <div class="row md-5 my-5 text-center">
+        <a href="{% url 'index' %}">Return to home page</a>
+    </div>
+</div>
+
+</main>
+{% endblock %}

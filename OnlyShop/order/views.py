@@ -35,3 +35,7 @@ class OrderDetailsView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView)
 
 class OrderCompleteView(OnlyShopLoginRequiredMixin, OrdersCountMixin, TemplateView):
     template_name = "order/order-success.html"
+
+
+class NoOrdersView(OnlyShopLoginRequiredMixin, OrdersCountMixin, TemplateView):
+    template_name = "order/order-unavailable.html"
