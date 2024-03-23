@@ -15,14 +15,21 @@
                     <div class="row mb-3">
                         <!--Grid column-->
                         <div class="col-md-6 mb-2">
+
                             <div class="form-outline">
-                                First name: {{ request.user.profile.first_name }}
+                                First name:
+                                {% if request.user.profile.first_name %}
+                                    {{ request.user.profile.first_name }}
+                                {% endif %}
                             </div>
                         </div>
 
                         <div class="col-md-6 mb-2">
                             <div class="form-outline">
-                                Last name: {{ request.user.profile.last_name }}
+                                Last name:
+                                {% if request.user.profile.last_name %}
+                                    {{ request.user.profile.last_name }}
+                                {% endif %}
                             </div>
                         </div>
 
@@ -43,6 +50,16 @@
                                     <label class="form-label checkout-form" for="{{ field.id_for_label }}">{{ field }}</label>
                                 </div>
                             {% endfor %}
+                            {% if not request.user.profile.first_name %}
+                                <div class="row mt-1" data-mdb-input-init>
+                                    First name: <input type="text" name="first_name" value="">
+                                    </div>
+                            {% endif %}
+                            {% if not request.user.profile.last_name %}
+                                <div class="row mt-1" data-mdb-input-init>
+                                    Last Name: <input type="text" name="last_name" value="">
+                                </div>
+                            {% endif %}
                             <button class="btn btn-primary" type="submit">Finish Order</button>
                         </form>
 
