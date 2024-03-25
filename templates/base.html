@@ -57,7 +57,7 @@
                 <a class="nav-link" href="{% url 'profile-details' pk=request.user.pk %}">Profile</a>
               </li>
               <li class="dropdown-item">
-                <a class="nav-link" href="{% url 'checkout' %}">Checkout</a>
+                <a class="nav-link" href="{% url 'order_summary' %}">Checkout</a>
               </li>
 
               {% if user.is_staff %}
@@ -90,7 +90,7 @@
                 <a class="nav-link" href="{% url 'profile-details' pk=request.user.pk %}">Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'checkout' %}">Checkout</a>
+                <a class="nav-link" href="{% url 'order_summary' %}">Checkout</a>
               </li>
 
               {% if user.is_staff %}
@@ -106,7 +106,7 @@
 
       <div class="d-flex align-items-center">
         {% if user.is_authenticated %}
-          <a class="nav-link me-3" href="{% url 'checkout' %}">
+          <a class="nav-link me-3" href="{% url 'order_summary' %}">
             <i class="fas fa-shopping-cart"></i>
             <span class="badge rounded-pill badge-notification bg-danger">{{ orders.count }}</span>
           </a>

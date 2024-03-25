@@ -37,7 +37,7 @@
                         {% endif %}
 
                     </div>
-                        <form  method="post" action="{% url 'checkout' %}">
+                        <form  method="post" action="{% url 'order_checkout' %}">
                             {% csrf_token %}
                             {% for field in form %}
                                 <div class="row mt-1" data-mdb-input-init>

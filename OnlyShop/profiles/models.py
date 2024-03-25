@@ -4,8 +4,9 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinLengthValidator
 from django.db import models
+import pycountry
 
-from OnlyShop.profiles.validators import name_validator
+from OnlyShop.profiles.validators import name_validator, postal_code_validator, all_digits_validator
 
 
 class CustomUserManager(BaseUserManager):
@@ -69,9 +70,11 @@ class Profile(models.Model):
 
 
 class BillingInfo(models.Model):
+    COUNTRY_CHOICES = [(country.alpha_2, country.name) for country in pycountry.countries]
+
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    postal_code = models.CharField(max_length=9, blank=True, null=True)
-    country = models.CharField(max_length=30)
+    postal_code = models.CharField(max_length=10, blank=True, null=True, validators=(postal_code_validator,))
+    country = models.CharField(max_length=30, choices=COUNTRY_CHOICES)
     city = models.CharField(max_length=30)
     street_address = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=15, validators=[MinLengthValidator(10)])
+    phone_number = models.CharField(max_length=15, validators=(MinLengthValidator(10), all_digits_validator))

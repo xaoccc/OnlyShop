@@ -5,7 +5,7 @@ from OnlyShop.profiles.models import BillingInfo
 
 User_Model = get_user_model()
 
-# Create your models here.
+
 class Order(models.Model):
     user = models.ForeignKey(User_Model, on_delete=models.CASCADE)
     billing_info = models.ForeignKey(BillingInfo, blank=True, null=True, on_delete=models.CASCADE)

@@ -105,59 +105,6 @@ class ItemDeleteView(OnlyShopStaffRequiredMixin, OrdersCountMixin, DeleteView):
         return context
 
 
-class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, ListView, FormView):
-    model = Order
-    template_name = 'checkout.html'
-    form_class = BillingInfoForm
-    def get_queryset(self):
-        return Order.objects.filter(user=self.request.user, ordered=False)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        total_cart_amount = 0
-        if Order.objects.filter(user=self.request.user, ordered=False):
-            for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
-                total_cart_amount += item.item.new_price * item.quantity
-        context['total_cart_amount'] = total_cart_amount
-        context['current_order'] = Order.objects.filter(user=self.request.user)
-        return context
-
-    def post(self, request, *args, **kwargs):
-        billing_info_form = BillingInfoForm(request.POST, user_profile=request.user.profile)
-
-        if billing_info_form.is_valid():
-            if not self.request.user.profile.first_name or not self.request.user.profile.last_name:
-                return redirect('profile-edit', pk=self.request.user.profile.pk)
-
-            billing_info_form.save()
-            current_billing_info = BillingInfo.objects.last()
-            if not Order.objects.filter(user=self.request.user, ordered=False):
-                return redirect('order_unavailable')
-
-            current_order = Order.objects.filter(user=self.request.user, ordered=False)[0]
-            current_order.ordered = True
-            current_order.billing_info = current_billing_info
-            total_cart_amount = 0
-            if Order.objects.filter(user=self.request.user, ordered=False):
-                for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
-                    total_cart_amount += item.item.new_price * item.quantity
-
-            current_order.total_order_amount = total_cart_amount
-
-            current_order.save()
-            return redirect('order_completed')
-        else:
-            context = self.get_context_data()
-
-            return self.render_to_response(context)
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        if BillingInfo.objects.filter(profile=self.request.user.profile):
-            last_instance = BillingInfo.objects.filter(profile=self.request.user.profile).last()
-            kwargs['instance'] = last_instance
-        return kwargs
-
 
 
 
