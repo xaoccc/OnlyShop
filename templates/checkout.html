@@ -13,35 +13,31 @@
                 <div class="card p-4">
                     <!--Grid row-->
                     <div class="row mb-3">
-                        <!--Grid column-->
-                        <div class="col-md-6 mb-2">
 
-                            <div class="form-outline">
-                                First name:
-                                {% if request.user.profile.first_name %}
-                                    {{ request.user.profile.first_name }}
-                                {% endif %}
+                        {% if not request.user.profile.first_name or not request.user.profile.last_name %}
+                            <div class="mb-2">
+                                <a href="{% url 'profile-edit' pk=request.user.profile.pk %}">Please complete your profile info, so you can complete your order.</a>
                             </div>
-                        </div>
+                        {% else %}
+                            <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                    First name: {{ request.user.profile.first_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                    Last name: {{ request.user.profile.last_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-outline">
+                                    Email: {{ request.user.email }}
+                                </div>
+                            </div>
+                        {% endif %}
 
-                        <div class="col-md-6 mb-2">
-                            <div class="form-outline">
-                                Last name:
-                                {% if request.user.profile.last_name %}
-                                    {{ request.user.profile.last_name }}
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-2">
-                            <div class="form-outline">
-                                Email: {{ request.user.email }}
-                            </div>
-                        </div>
                     </div>
-
                         <form  method="post" action="{% url 'checkout' %}">
-
                             {% csrf_token %}
                             {% for field in form %}
                                 <div class="row mt-1" data-mdb-input-init>
@@ -52,7 +48,6 @@
                             {% endfor %}
                             <button class="btn btn-primary" type="submit">Finish Order</button>
                         </form>
-
                     </div>
 
                     <hr />

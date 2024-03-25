@@ -129,7 +129,6 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
             if not self.request.user.profile.first_name or not self.request.user.profile.last_name:
                 return redirect('profile-edit', pk=self.request.user.profile.pk)
 
-
             billing_info_form.save()
             current_billing_info = BillingInfo.objects.last()
             if not Order.objects.filter(user=self.request.user, ordered=False):
