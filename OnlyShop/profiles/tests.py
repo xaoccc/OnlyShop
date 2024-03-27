@@ -1,6 +1,13 @@
+import os
+
+from django.core.exceptions import ValidationError
+from django.test import TestCase
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'OnlyShop.settings')
+import django
+django.setup()
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 
 class UsersManagersTests(TestCase):
     def test_create_user(self):
@@ -17,7 +24,7 @@ class UsersManagersTests(TestCase):
             pass
         with self.assertRaises(TypeError):
             AppUser.objects.create_user()
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             AppUser.objects.create_user(email="")
         with self.assertRaises(ValueError):
             AppUser.objects.create_user(email="", password="foo")
