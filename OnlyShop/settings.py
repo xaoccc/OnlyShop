@@ -169,7 +169,6 @@ UNIQUE_EMAIL = True
 USERNAME_REQUIRED = False
 EMAIL_VERIFICATION = 'mandatory'
 USERNAME_VALIDATORS = []
-ADAPTER = 'OnlyShop.profiles.adapters.CustomAccountAdapter'
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
