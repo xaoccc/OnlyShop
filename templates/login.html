@@ -21,6 +21,8 @@
             <p>Not a member? <a href="{% url 'register' %}">Register</a></p>
         </div>
     </form>
+    {% load socialaccount %}
+    <a href="{% provider_login_url 'google' %}?next=/">Google Login</a>
 
 
 

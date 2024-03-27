@@ -1,5 +1,10 @@
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,11 +37,25 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
     'OnlyShop.main_app',
     'OnlyShop.profiles',
     'OnlyShop.order',
 ]
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email'
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 
 MIDDLEWARE = [
@@ -79,10 +98,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'HOST': '127.0.0.1',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
         'PORT': '5432',
-        'NAME': 'webstore_db',
+        'NAME': os.environ.get('DB_NAME'),
     }
 }
 
@@ -139,11 +158,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
-    # 'allauth.account.auth_backends.AuthenticationBackend',
+
 ]
+
+AUTHENTICATION_METHOD = 'email'
+EMAIL_REQUIRED = True
+UNIQUE_EMAIL = True
+USERNAME_REQUIRED = False
+EMAIL_VERIFICATION = 'mandatory'
+USERNAME_VALIDATORS = []
+ADAPTER = 'OnlyShop.profiles.adapters.CustomAccountAdapter'
 
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = "profiles.AppUser"
+
+
+
