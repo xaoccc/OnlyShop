@@ -8,8 +8,20 @@ from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditFo
 from OnlyShop.profiles.models import Profile
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginRequiredMixin
 
+from celery import shared_task
+from django.core.mail import send_mail
+
 UserModel = get_user_model()
 
+
+@shared_task
+def send_welcome_email(user_email):
+    # Customize the email content as needed
+    subject = 'Welcome to Our Website'
+    message = 'Thank you for registering!'
+    sender = 'your@example.com'
+    recipient_list = [user_email]
+    send_mail(subject, message, sender, recipient_list)
 
 class IndexView(GetUserMixin, OrdersCountMixin, ListView):
     model = Item
@@ -46,6 +58,7 @@ class RegisterView(CreateView):
         # Here we log in the newly registered user and he/she/it is redirected
         # to the home page as legged-in user for better UX
         login(self.request, self.object)
+        send_welcome_email.delay(form.instance.email)
         return form
 
 def user_logout(request):
