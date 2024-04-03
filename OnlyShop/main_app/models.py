@@ -19,11 +19,6 @@ class Item(models.Model):
         ('Eco', 'Eco'),
     )
 
-    LABEL_STYLES = (
-        ('bg-dark', 'bg-dark'),
-        ('bg-success', 'bg-success'),
-    )
-
     name = models.CharField(max_length=100, verbose_name="Name")
     new_price = models.FloatField(verbose_name="Price", validators=(MinValueValidator(0, "Price must be a positive number"),))
     old_price = models.FloatField(validators=(MinValueValidator(0, "Price must be a positive number"),), blank=True, null=True)

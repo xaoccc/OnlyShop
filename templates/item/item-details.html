@@ -15,11 +15,18 @@
                 <!--Content-->
                 <div class="p-4">
 
-                    <strong><p style="font-size: 20px;">{{ object.name }}</p></strong>
+                    <strong>
+                        <p style="font-size: 20px;">{{ object.name }}</p>
+                    </strong>
                     <div class="mb-3">
                         <a href="{% url 'index' %}?item_type={{ object.type }}">
                             <span class="badge bg-dark me-1">{{ object.type }}</span>
                         </a>
+                        {% if object.label %}
+                            <a href="">
+                                <span class="badge {{ object.label_style }} me-1">{{ object.label }}</span>
+                            </a>
+                        {% endif %}
                     </div>
 
                     <p class="lead">

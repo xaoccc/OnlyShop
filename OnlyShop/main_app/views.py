@@ -80,14 +80,21 @@ class ItemCreateView(OrdersCountMixin, OnlyShopStaffRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('index')
 
-    # def form_valid(self, form):
-    #     label_value = form.cleaned_data['label']
-    #     if label_value == 'NEW':
-    #         self.object.label_style = 'bg-dark'
-    #     if label_value == 'Eco':
-    #         self.object.label_style = 'bg-success'
-    #     self.object.save()
-    #     return super().form_valid(form)
+    def form_valid(self, form):
+        label_value = form.cleaned_data['label']
+
+        if label_value == 'NEW':
+            label_style = 'bg-primary'
+        elif label_value == 'Eco':
+            label_style = 'bg-success'
+        else:
+            label_style = None
+
+        instance = form.save(commit=False)
+        instance.label_style = label_style
+        instance.save()
+
+        return super().form_valid(form)
 
 
 

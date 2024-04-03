@@ -93,7 +93,7 @@
 
                   {% if user.is_authenticated %}
                     <a href="{% url 'item-details' pk=object.pk %}">
-                        <div class="mask">
+                      <div class="mask">
                         {% if object.label %}
                           <div class="d-flex justify-content-start align-items-end h-100">
                             <h5><span class="badge {{ object.label_style }} ms-2">{{ object.label }}</span></h5>
