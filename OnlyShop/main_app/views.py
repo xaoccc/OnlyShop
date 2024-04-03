@@ -70,7 +70,7 @@ def remove_from_cart(request, pk):
 class ItemCreateView(OrdersCountMixin, OnlyShopStaffRequiredMixin, CreateView):
     template_name = 'item/item-add.html'
     model = Item
-    fields = ['name', 'new_price', 'old_price', 'type', 'label', 'label_style', 'image', 'description']
+    fields = ['name', 'new_price', 'old_price', 'type', 'label', 'image', 'description']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -79,6 +79,17 @@ class ItemCreateView(OrdersCountMixin, OnlyShopStaffRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('index')
+
+    # def form_valid(self, form):
+    #     label_value = form.cleaned_data['label']
+    #     if label_value == 'NEW':
+    #         self.object.label_style = 'bg-dark'
+    #     if label_value == 'Eco':
+    #         self.object.label_style = 'bg-success'
+    #     self.object.save()
+    #     return super().form_valid(form)
+
+
 
 
 class ItemEditView(OrdersCountMixin, OnlyShopStaffRequiredMixin, UpdateView):

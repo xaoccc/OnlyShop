@@ -17,7 +17,7 @@
 
                     <strong><p style="font-size: 20px;">{{ object.name }}</p></strong>
                     <div class="mb-3">
-                        <a href="">
+                        <a href="{% url 'index' %}?item_type={{ object.type }}">
                             <span class="badge bg-dark me-1">{{ object.type }}</span>
                         </a>
                     </div>
