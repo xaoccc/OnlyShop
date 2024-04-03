@@ -10,7 +10,7 @@ class Item(models.Model):
         ('Small', 'Small'),
         ('Medium', 'Medium'),
         ('Big', 'Big'),
-        ('VeryBig', 'VeryBig'),
+        ('Very Big', 'Very Big'),
         ('Abstract', 'Abstract'),
     )
 

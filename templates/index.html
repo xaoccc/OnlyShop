@@ -8,10 +8,6 @@
     <!-- Container wrapper -->
     <div class="container-fluid">
 
-      <!-- Navbar brand -->
-
-
-      <!-- Toggle button -->
       <button
           data-mdb-collapse-init
           class="navbar-toggler"
@@ -27,21 +23,11 @@
         <div class="collapse" id="navbarToggleExternalContent2">
 
             <ul class="navbar-nav me-auto mb-2 mt-0 mb-lg-0 dropdown-menu rounded-0"  style="background-color: #607D8B">
-              <li class="dropdown-item">
-                <a class="nav-link text-white" href="?item_type=Small">Small</a>
-              </li>
-              <li class="dropdown-item">
-                <a class="nav-link text-white" href="?item_type=Medium">Medium</a>
-              </li>
-              <li class="dropdown-item">
-                <a class="nav-link text-white" href="?item_type=Big">Big</a>
-              </li>
-              <li class="dropdown-item">
-                <a class="nav-link text-white" href="?item_type=VeryBig">Very Big</a>
-              </li>
-              <li class="dropdown-item">
-                <a class="nav-link text-white" href="?item_type=Abstract">Abstract</a>
-              </li>
+              {% for item_type in item_types %}
+                <li class="dropdown-item">
+                    <a class="nav-link text-white" href="?item_type={{ item_type }}">{{ item_type }}</a>
+                </li>
+              {% endfor %}
             </ul>
 
         </div>
@@ -55,22 +41,11 @@
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="ms-5 navbar-brand">Filter by item type:</li>
-          <!-- Link -->
-          <li class="nav-item">
-            <a class="nav-link text-white" href="?item_type=Small">Small</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="?item_type=Medium">Medium</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="?item_type=Big">Big</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="?item_type=VeryBig">Very Big</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="?item_type=Abstract">Abstract</a>
-          </li>
+          {% for item_type in item_types %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="?item_type={{ item_type }}">{{ item_type }}</a>
+            </li>
+          {% endfor %}
         </ul>
 
         <!-- Search -->

@@ -107,6 +107,22 @@ class ItemEditView(OrdersCountMixin, OnlyShopStaffRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('item-details', kwargs={'pk': self.object.pk})
 
+    def form_valid(self, form):
+        label_value = form.cleaned_data['label']
+
+        if label_value == 'NEW':
+            label_style = 'bg-primary'
+        elif label_value == 'Eco':
+            label_style = 'bg-success'
+        else:
+            label_style = None
+
+        instance = form.save(commit=False)
+        instance.label_style = label_style
+        instance.save()
+
+        return super().form_valid(form)
+
 
 class ItemDeleteView(OnlyShopStaffRequiredMixin, OrdersCountMixin, DeleteView):
     # We cannot use both model and form, we must choose one of them

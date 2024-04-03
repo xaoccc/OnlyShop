@@ -32,6 +32,11 @@ class IndexView(GetUserMixin, OrdersCountMixin, ListView):
 
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item_types'] = ['Small', 'Medium', 'Big', 'Very Big', 'Abstract']
+        return context
+
 
 class UserLogIn(LoginView):
     authentication_form = UserLoginForm
