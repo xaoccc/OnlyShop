@@ -95,7 +95,6 @@
                   {% endif %}
                 </div>
 
-
                 <div class="card-body">
 
                   {% if user.is_authenticated %}
@@ -113,8 +112,6 @@
                       <p>{{ object.type }}</p>
                     </a>
                   {% endif %}
-
-
                   <h6 class="mb-3 price">{{ object.new_price }}$</h6>
                 </div>
               </div>
@@ -132,13 +129,13 @@
 
         {% if page_obj.has_previous %}
            <li class="page-item">
-            <a class="page-link" href="?page=1" aria-label="Previous">
+            <a class="page-link" href="{{ item_name_query }}{{ item_type_query }}&page=1" aria-label="Previous">
               <span aria-hidden="true">&Lang;</span>
             </a>
           </li>
 
           <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+            <a class="page-link" href="{{ item_name_query }}{{ item_type_query }}&page={{ page_obj.previous_page_number }}" aria-label="Previous">
               <span aria-hidden="true">&lang;</span>
             </a>
           </li>
@@ -147,26 +144,26 @@
         {% for num in page_obj.paginator.page_range %}
           {% if page_obj.number == num %}
             <li class="page-item active" aria-current="page">
-              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+              <a class="page-link" href="{{ item_name_query }}{{ item_type_query }}&page={{ num }}">{{ num }}</a>
             </li>
           {% else %}
             <li class="page-item">
-              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+              <a class="page-link" href="{{ item_name_query }}{{ item_type_query }}&page={{ num }}">{{ num }}</a>
             </li>
           {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-              <span aria-hidden="true">&rang;</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
-              <span aria-hidden="true">&Rang;</span>
-            </a>
-          </li>
+            <li class="page-item">
+              <a class="page-link" href="{{ item_name_query }}{{ item_type_query }}&page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&rang;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="{{ item_name_query }}{{ item_type_query }}&page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                <span aria-hidden="true">&Rang;</span>
+              </a>
+            </li>
         {% endif %}
       </ul>
     </nav>

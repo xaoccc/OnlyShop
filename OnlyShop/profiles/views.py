@@ -34,6 +34,15 @@ class IndexView(GetUserMixin, OrdersCountMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        item_type_query = self.request.GET.get("item_type", None)
+        if item_type_query:
+            context['item_type_query'] = f"?item_type={item_type_query}"
+
+        item_name_query = self.request.GET.get("item_name", None)
+        if item_name_query:
+            context['item_name_query'] = f"?item_name={item_name_query}"
+
         context['item_types'] = ['Small', 'Medium', 'Big', 'Very Big', 'Abstract']
         return context
 
