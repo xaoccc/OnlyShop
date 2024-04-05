@@ -37,13 +37,18 @@ class IndexView(GetUserMixin, OrdersCountMixin, ListView):
 
         item_type_query = self.request.GET.get("item_type", None)
         if item_type_query:
-            context['item_type_query'] = f"?item_type={item_type_query}"
+            context["item_type_query"] = f"?item_type={item_type_query}"
 
         item_name_query = self.request.GET.get("item_name", None)
         if item_name_query:
-            context['item_name_query'] = f"?item_name={item_name_query}"
+            context["item_name_query"] = f"?item_name={item_name_query}"
 
-        context['item_types'] = ['Small', 'Medium', 'Big', 'Very Big', 'Abstract']
+        if not item_type_query and not item_name_query:
+            context["page_query"] = "?page="
+        else:
+            context["page_query"] = "&page="
+
+        context["item_types"] = ["Small", "Medium", "Big", "Very Big", "Abstract"]
         return context
 
 
