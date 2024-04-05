@@ -74,6 +74,7 @@ class ProfileDetailView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView
     template_name = 'profile/profile-details.html'
     model = Profile
 
+
 class ProfileEditView(OnlyShopLoginRequiredMixin, OrdersCountMixin, UpdateView):
     template_name = 'profile/profile-edit.html'
     form_class = ProfileEditForm
@@ -83,6 +84,7 @@ class ProfileEditView(OnlyShopLoginRequiredMixin, OrdersCountMixin, UpdateView):
 
     def get_queryset(self):
         return Profile.objects.all()
+
 
 class ProfileDeleteView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DeleteView):
     template_name = 'profile/profile-delete.html'

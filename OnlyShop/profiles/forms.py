@@ -2,8 +2,11 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, get_user_model
 from django import forms
+from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator
 
 from OnlyShop.profiles.models import AppUser, Profile, BillingInfo
+from OnlyShop.profiles.validators import name_validator
 from OnlyShop.utils.mixins import InputStyleMixin
 
 UserModel = get_user_model()
@@ -46,6 +49,12 @@ class ProfileEditForm(InputStyleMixin, forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['first_name', 'last_name', 'profile_picture']
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileEditForm, self).__init__(*args, **kwargs)
+        # Add validators to the fields
+        self.fields['first_name'].validators += [MinLengthValidator(2, "Your name should be minimum two characters long!"), name_validator]
+        self.fields['last_name'].validators += [MinLengthValidator(2, "Your name should be minimum two characters long!"), name_validator]
 
 
 class UserDeleteForm(forms.ModelForm):
