@@ -4,7 +4,53 @@
 
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
+        {% for item in object.items.all %}
+            <div class="col-lg-3 col-md-4 card-container">
+              <div class="card">
+                <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light product-list-img-wrapper"
+                  data-mdb-ripple-color="light">
+                  <img src="{{ item.item.image }}" class="img-fluid product-image" />
 
+                    <a href="{% url 'item-details' pk=item.item.pk %}">
+                      <div class="mask">
+                        {% if item.item.label %}
+                          <div class="d-flex justify-content-start align-items-end h-100">
+                            <h5><span class="badge {{ item.item.label_style }} ms-2">{{ item.item.label }}</span></h5>
+                          </div>
+                        {% endif %}
+                      </div>
+                      <div class="hover-overlay">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                      </div>
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+                    <a href="{% url 'item-details' pk=item.item.pk %}" class="text-reset">
+                      <h5 class="card-title mb-2">{{ item.quantity }} x {{ item.item.name }}</h5>
+                    </a>
+                    <a href="{% url 'item-details' pk=item.item.pk %}" class="text-reset ">
+                      <p>{{ item.item.type }}</p>
+                    </a>
+                    <a href="{% url 'item-details' pk=item.item.pk %}" class="text-reset ">
+                      <p>{{ item.item.description }}</p>
+                    </a>
+                  <h6 class="mb-3 price">{{ item.item.new_price }}$</h6>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+        {% endfor %}
     </div>
 </div>
 

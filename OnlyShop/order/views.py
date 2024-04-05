@@ -35,6 +35,12 @@ class OrderDetailsView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView)
     model = Order
     template_name = "order/order-details.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["items"] = self.object.items
+
+        return context
+
 
 class OrderCompleteView(OnlyShopLoginRequiredMixin, OrdersCountMixin, TemplateView):
     template_name = "order/order-success.html"
