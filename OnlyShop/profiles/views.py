@@ -20,7 +20,7 @@ class IndexView(GetUserMixin, OrdersCountMixin, ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = Item.objects.all()
+        queryset = Item.objects.all().order_by("new_price")
         filter_by_item_name = self.request.GET.get("item_name", None)
 
         if filter_by_item_name:

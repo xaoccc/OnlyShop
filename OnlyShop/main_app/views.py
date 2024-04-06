@@ -97,8 +97,6 @@ class ItemCreateView(OrdersCountMixin, OnlyShopStaffRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-
-
 class ItemEditView(OrdersCountMixin, OnlyShopStaffRequiredMixin, UpdateView):
     model = Item
     template_name = "item/item-edit.html"
