@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <main>
-
     <form class="login-form" action="{% url 'login' %}" method="post">
         {% csrf_token %}
         {{ form.non_field_errors }}
@@ -21,9 +20,5 @@
             <p>Not a member? <a href="{% url 'register' %}">Register</a></p>
         </div>
     </form>
-
-
-
-
 </main>
 {% endblock %}
