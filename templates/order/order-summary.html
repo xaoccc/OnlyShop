@@ -79,15 +79,14 @@
 
                             <small class="text-muted">{{ item.item.description }}</small>
                         </div>
-                        <div class="d-flex text-muted">
-                            <div class="pe-2">{{ item.quantity }} x ${{ item.item.new_price }}:</div>
-                            <div>${% widthratio item.item.new_price 1 item.quantity %}</div>
+                        <div class="text-muted w-100">
+                            {{ item.quantity }} x ${{ item.item.new_price }}: ${{ item.total_item_order_amount|floatformat:2 }}
                         </div>
                     </li>
                     {% endfor %}
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>${{ total_cart_amount }}</strong>
+                        <span>Total (USD): </span>
+                        <strong>${{ total_cart_amount|floatformat:2 }}</strong>
                     </li>
                 </ul>
             </div>

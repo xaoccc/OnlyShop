@@ -38,6 +38,7 @@ class ItemOrder(models.Model):
     quantity = models.IntegerField(default=1)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     ordered = models.BooleanField(default=False)
+    total_item_order_amount = models.FloatField(default=0, validators=(MinValueValidator(0, "Price must be a positive number"),))
 
 
 

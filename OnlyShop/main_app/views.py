@@ -26,12 +26,13 @@ class ItemDetailView(OrdersCountMixin, LoginRequiredMixin, DetailView):
 
 def add_to_cart(request, pk):
     item = get_object_or_404(Item, pk=pk)
-    order_item, created = ItemOrder.objects.get_or_create(item=item, user=request.user, ordered=False)
+    order_item, created = ItemOrder.objects.get_or_create(item=item, user=request.user, ordered=False, total_item_order_amount=item.new_price)
     order_queryset = Order.objects.filter(user=request.user, ordered=False)
     if order_queryset.exists():
         order = order_queryset[0]
         if order.items.filter(item__pk=item.pk).exists():
             order_item.quantity += 1
+            order_item.total_item_order_amount += item.new_price
             order_item.save()
             messages.info(request, "Your order was updated.")
         else:

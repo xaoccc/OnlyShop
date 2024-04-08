@@ -9,7 +9,6 @@ from OnlyShop.profiles.models import BillingInfo
 from OnlyShop.utils.mixins import OrdersCountMixin, OnlyShopLoginRequiredMixin, GetUserMixin
 
 
-# Create your views here.
 
 
 class AllOrdersView(OnlyShopLoginRequiredMixin, OrdersCountMixin, ListView):
@@ -23,12 +22,6 @@ class AllOrdersView(OnlyShopLoginRequiredMixin, OrdersCountMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["billing_info"] = BillingInfo.objects.filter(profile=self.request.user.profile)
-
-        for order in Order.objects.filter(user=self.request.user):
-            for item in order.items.all():
-                order.total_order_amount += item.quantity * item.item.new_price
-            order.save()
-
         return context
 
 class OrderDetailsView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView):
@@ -61,7 +54,7 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
         total_cart_amount = 0
         if Order.objects.filter(user=self.request.user, ordered=False):
             for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
-                total_cart_amount += item.item.new_price * item.quantity
+                total_cart_amount += item.total_item_order_amount
         context['total_cart_amount'] = total_cart_amount
         context['current_order'] = Order.objects.filter(user=self.request.user)
         return context
