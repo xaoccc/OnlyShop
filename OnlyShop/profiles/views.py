@@ -1,8 +1,11 @@
 from django.contrib.auth import logout, get_user_model, login
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView, TemplateView
+
+from OnlyShop import settings
 from OnlyShop.main_app.models import Item
 from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditForm, UserDeleteForm
 from OnlyShop.profiles.models import Profile
@@ -54,6 +57,12 @@ class UserLogIn(LoginView):
     authentication_form = UserLoginForm
     template_name = 'login.html'
 
+def send_register_email(request):
+    subject = 'Successful Registration!'
+    message = 'Thank you for joining our app. Enjoy your stay. We hope you find what you are looking for.'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [UserModel.objects.all().last().email]
+    send_mail(subject, message, email_from, recipient_list)
 
 class RegisterView(CreateView):
     form_class = CreateUserForm
@@ -63,6 +72,7 @@ class RegisterView(CreateView):
 
     def form_valid(self, *args, **kwargs):
         form = super().form_valid(*args, **kwargs)
+        send_register_email(self.request)
         # Here we log in the newly registered user and he/she/it is redirected
         # to the home page as legged-in user for better UX
         login(self.request, self.object)
