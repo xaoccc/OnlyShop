@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -8,18 +7,15 @@ from OnlyShop.main_app.models import Item, ItemOrder
 from django.contrib import messages
 
 from OnlyShop.order.models import Order
-from OnlyShop.profiles.forms import BillingInfoForm
-from OnlyShop.profiles.models import BillingInfo
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopStaffRequiredMixin, OnlyShopLoginRequiredMixin
 
 
-class ItemDetailView(OrdersCountMixin, LoginRequiredMixin, DetailView):
+class ItemDetailView(OrdersCountMixin, OnlyShopLoginRequiredMixin, DetailView):
     model = Item
     template_name = 'item/item-details.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['all_items'] = Item.objects.exclude(id=self.object.id)[:3]
         context['user'] = self.request.user
         return context
 
