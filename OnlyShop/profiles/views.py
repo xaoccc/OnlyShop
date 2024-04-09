@@ -6,12 +6,10 @@ from django.views.generic import ListView, DetailView, DeleteView, UpdateView, C
 from OnlyShop.main_app.models import Item
 from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditForm, UserDeleteForm
 from OnlyShop.profiles.models import Profile
-from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginRequiredMixin
-
+from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginRequiredMixin, \
+    OnlyShopThisUserRequiredMixin
 
 UserModel = get_user_model()
-
-
 
 
 class IndexView(GetUserMixin, OrdersCountMixin, ListView):
@@ -75,12 +73,12 @@ def user_logout(request):
     return redirect('index')
 
 
-class ProfileDetailView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView):
+class ProfileDetailView(OnlyShopThisUserRequiredMixin, OrdersCountMixin, DetailView):
     template_name = 'profile/profile-details.html'
     model = Profile
 
 
-class ProfileEditView(OnlyShopLoginRequiredMixin, OrdersCountMixin, UpdateView):
+class ProfileEditView(OnlyShopThisUserRequiredMixin, OrdersCountMixin, UpdateView):
     template_name = 'profile/profile-edit.html'
     form_class = ProfileEditForm
 
@@ -91,7 +89,7 @@ class ProfileEditView(OnlyShopLoginRequiredMixin, OrdersCountMixin, UpdateView):
         return Profile.objects.all()
 
 
-class ProfileDeleteView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DeleteView):
+class ProfileDeleteView(OnlyShopThisUserRequiredMixin, OrdersCountMixin, DeleteView):
     template_name = 'profile/profile-delete.html'
     form_class = UserDeleteForm
 

@@ -32,6 +32,14 @@ class OnlyShopLoginRequiredMixin(LoginRequiredMixin):
     def handle_no_permission(self):
         return redirect('error_401')
 
+class OnlyShopThisUserRequiredMixin(OnlyShopLoginRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        profile = self.get_object()
+        if profile.user != self.request.user:
+            return redirect('error_401')
+
+        return super().dispatch(request, *args, **kwargs)
+
 class OnlyShopStaffRequiredMixin(LoginRequiredMixin):
     def handle_no_permission(self):
         return redirect('error_401')
