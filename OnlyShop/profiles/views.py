@@ -2,6 +2,7 @@ from django.contrib.auth import logout, get_user_model, login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView, TemplateView
 
@@ -59,10 +60,11 @@ class UserLogIn(LoginView):
 
 def send_register_email(request):
     subject = 'Successful Registration!'
+    html_message = render_to_string('registration_email.html', {})
     message = 'Thank you for joining our app. Enjoy your stay. We hope you find what you are looking for.'
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [UserModel.objects.all().last().email]
-    send_mail(subject, message, email_from, recipient_list)
+    send_mail(subject, message, email_from, recipient_list, html_message=html_message)
 
 class RegisterView(CreateView):
     form_class = CreateUserForm
