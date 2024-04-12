@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
 from OnlyShop.order.models import Order
+from OnlyShop.profiles.models import Profile
 
 
 class OrdersCountMixin:
@@ -35,6 +36,15 @@ class OnlyShopLoginRequiredMixin(LoginRequiredMixin):
 class OnlyShopThisUserRequiredMixin(OnlyShopLoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         profile = self.get_object()
+        if profile.user != self.request.user:
+            return redirect('error_401')
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class OnlyShopDeleteThisUserRequiredMixin(OnlyShopLoginRequiredMixin):
+    def dispatch(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=self.get_object())
         if profile.user != self.request.user:
             return redirect('error_401')
 

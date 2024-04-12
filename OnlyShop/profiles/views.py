@@ -11,7 +11,7 @@ from OnlyShop.main_app.models import Item
 from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditForm, UserDeleteForm
 from OnlyShop.profiles.models import Profile
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginRequiredMixin, \
-    OnlyShopThisUserRequiredMixin
+    OnlyShopThisUserRequiredMixin, OnlyShopDeleteThisUserRequiredMixin
 
 UserModel = get_user_model()
 
@@ -101,7 +101,7 @@ class ProfileEditView(OnlyShopThisUserRequiredMixin, OrdersCountMixin, UpdateVie
         return Profile.objects.all()
 
 
-class ProfileDeleteView(OnlyShopThisUserRequiredMixin, OrdersCountMixin, DeleteView):
+class ProfileDeleteView(OnlyShopDeleteThisUserRequiredMixin, OrdersCountMixin, DeleteView):
     template_name = 'profile/profile-delete.html'
     form_class = UserDeleteForm
 
