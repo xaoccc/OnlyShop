@@ -64,7 +64,7 @@
             </div>
         </div>
         <hr />
-        {% if request.user.is_superuser %}
+        {% if request.user.is_staff %}
             <div class="mt-5 text-center">
                 <a href="{% url 'item-edit' pk=object.pk %}" class="btn btn-primary" type="submit">Edit Item</a>
                 <a href="{% url 'item-delete' pk=object.pk %}" class="btn btn-danger" type="submit">Delete Item</a>
