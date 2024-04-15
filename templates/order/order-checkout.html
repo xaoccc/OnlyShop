@@ -46,68 +46,11 @@
                                     <label class="form-label checkout-form" for="{{ field.id_for_label }}">{{ field }}</label>
                                 </div>
                             {% endfor %}
-                            <button class="btn btn-primary" type="submit">Finish Order</button>
+                            <div>Payment method:</div>
+
+                            <button class="btn btn-primary" type="submit">Continue to payment</button>
                         </form>
                     </div>
-
-                    <hr />
-
-                    <div class="my-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked />
-                            <label class="form-check-label" for="flexRadioDefault1"> Credit card </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                            <label class="form-check-label" for="flexRadioDefault2"> Debit card </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
-                            <label class="form-check-label" for="flexRadioDefault3"> Paypal </label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6 mb-3">
-                            <p class="mb-0">
-                                Name on card
-                            </p>
-                            <div class="form-outline">
-                                <input type="text" class="form-control"/>
-                                <div class="form-helper">Full name as displayed on card</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <p class="mb-0">
-                                Credit card number
-                            </p>
-                            <div class="form-outline">
-                                <input type="text" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <p class="mb-0">
-                                Expiration
-                            </p>
-                            <div class="form-outline">
-                                <input type="text" class="form-control" />
-
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <p class="mb-0">
-                                CVV
-                            </p>
-                            <div class="form-outline">
-                                <input type="text" class="form-control" />
-
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="mb-4" />
-
 
                 <!--/.Card-->
             </div>

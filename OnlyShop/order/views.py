@@ -1,5 +1,6 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, FormView
 
 from OnlyShop.main_app.models import ItemOrder
@@ -102,3 +103,7 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
             context = self.get_context_data()
             return self.render_to_response(context)
 
+
+class OrderPaymentView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        return render(self.request, 'order/payment.html')
