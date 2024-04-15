@@ -1,4 +1,3 @@
-
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -6,23 +5,13 @@ import os
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lx*ei@vbn6@rh5y-5i#3a^-ib2v^0@c5&o(i%la5q$)y+%#bi('
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,7 +25,6 @@ INSTALLED_APPS = [
     'OnlyShop.profiles',
     'OnlyShop.order',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,10 +56,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'OnlyShop.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -82,10 +66,6 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
