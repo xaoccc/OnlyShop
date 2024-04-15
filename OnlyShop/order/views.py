@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
@@ -98,7 +99,18 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
 
             current_order.total_order_amount = total_cart_amount
             current_order.save()
-            return redirect('order_completed')
+
+            payment_option = billing_info_form.cleaned_data.get('payment_option')
+
+            if payment_option == 'Stripe':
+                return redirect('order_payment', payment_option='stripe')
+            elif payment_option == 'PayPal':
+                return redirect('order_payment', payment_option='paypal')
+            else:
+                messages.warning(
+                    self.request, "Invalid payment option selected")
+                return redirect('order_checkout')
+
         else:
             context = self.get_context_data()
             return self.render_to_response(context)

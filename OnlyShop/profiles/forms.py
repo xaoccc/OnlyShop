@@ -71,7 +71,7 @@ class UserDeleteForm(forms.ModelForm):
 class BillingInfoForm(forms.ModelForm):
     class Meta:
         model = BillingInfo
-        fields = ["postal_code", "country", "city", "street_address", "phone_number"]
+        fields = ["postal_code", "country", "city", "street_address", "phone_number", "payment_option"]
 
     def __init__(self, *args, **kwargs):
         user_profile = kwargs.pop('user_profile', None)
