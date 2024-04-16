@@ -8,4 +8,5 @@ urlpatterns = [
     path('item/', include('OnlyShop.main_app.urls')),
     path('', include('OnlyShop.profiles.urls')),
     path('order/', include('OnlyShop.order.urls')),
+    path('payments/', include('OnlyShop.payments.urls')),
 ]

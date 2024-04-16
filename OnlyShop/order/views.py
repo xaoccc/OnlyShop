@@ -116,6 +116,4 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
             return self.render_to_response(context)
 
 
-class OrderPaymentView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, View):
-    def get(self, *args, **kwargs):
-        return render(self.request, 'order/payment.html')
+

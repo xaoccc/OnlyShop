@@ -9,5 +9,4 @@ urlpatterns = [
     path('order-unavailable/', views.NoOrdersView.as_view(), name='order_unavailable'),
     path('order-summary/', views.OrderSummaryView.as_view(), name='order_summary'),
     path('order-checkout/', views.OrderCheckoutView.as_view(), name='order_checkout'),
-    path('order-payment/<slug:payment_option>/', views.OrderPaymentView.as_view(), name='order_payment'),
 ]
