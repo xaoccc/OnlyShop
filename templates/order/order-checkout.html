@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
+
 <main>
     <div class="container">
         <!-- Heading -->
@@ -37,7 +40,8 @@
                         {% endif %}
 
                     </div>
-                        <form  method="post" action="{% url 'order_checkout' %}">
+                        <form  action="{% url 'create_checkout_session' %}" method="get">
+
                             {% csrf_token %}
                             {% for field in form %}
                                 <div class="row mt-1" data-mdb-input-init>
@@ -46,10 +50,12 @@
                                     <label class="form-label checkout-form" for="{{ field.id_for_label }}">{{ field }}</label>
                                 </div>
                             {% endfor %}
-                            <div>Payment method:</div>
+                            <script type="module" src="https://js.stripe.com/v3/"></script>
+                            <script type="module" src="{% static 'js/stripe.js' %}"></script>
+                            <button class="btn btn-primary" id="submitBtn" type="submit">Continue to payment</button>
 
-                            <button class="btn btn-primary" type="submit">Continue to payment</button>
                         </form>
+
                     </div>
 
                 <!--/.Card-->

@@ -66,7 +66,7 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
     template_name = 'order/order-checkout.html'
     form_class = BillingInfoForm
     def get_success_url(self):
-        return reverse('order_completed')
+        return reverse('create_checkout_session')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

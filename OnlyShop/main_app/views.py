@@ -22,8 +22,14 @@ class ItemDetailView(OrdersCountMixin, OnlyShopLoginRequiredMixin, DetailView):
 
 def add_to_cart(request, pk):
     item = get_object_or_404(Item, pk=pk)
-    order_item, created = ItemOrder.objects.get_or_create(item=item, user=request.user, ordered=False, total_item_order_amount=item.new_price)
+    try:
+        order_item = ItemOrder.objects.get(item=item, user=request.user, ordered=False)
+    except:
+        order_item = ItemOrder.objects.create(item=item, user=request.user, ordered=False,
+                                           total_item_order_amount=item.new_price)
+
     order_queryset = Order.objects.filter(user=request.user, ordered=False)
+
     if order_queryset.exists():
         order = order_queryset[0]
         if order.items.filter(item__pk=item.pk).exists():

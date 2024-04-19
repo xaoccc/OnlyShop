@@ -3,24 +3,21 @@ import stripe
 from django.shortcuts import render
 from django.views import View
 
+from OnlyShop.main_app.models import ItemOrder
 from OnlyShop.order.models import Order
 from OnlyShop.utils.mixins import GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin
 from django.conf import settings
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 
 logger = logging.getLogger(__name__)
 
 PRODUCT_ID_MAP = {
-    'Banana': 'prod_Pw47ZaTVgfykFY'
+    'Banana': 'price_1P7DrxP7rtsr5KNvG7c6hwuj',
+    'T-Mobile': 'price_1P7FAUP7rtsr5KNvsna6X4In',
+    'BLU': 'price_1P7FB7P7rtsr5KNvPdvfYWkF',
 }
-
-
-class PaymentView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, View):
-    def get(self, *args, **kwargs):
-        return render(self.request, 'order/payment.html')
-
 
 
 @csrf_exempt
@@ -33,27 +30,27 @@ def stripe_config(request):
 @csrf_exempt
 def create_checkout_session(request):
     if request.method == 'GET':
-        domain_url = 'http://localhost:8000/'
+        domain_url = 'http://localhost:8000/payments/'
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         line_items = []
 
-        items = Order.objects.filter(user=request.user, ordered=False).items
-
+        items = Order.objects.filter(user=request.user, ordered=False)[0].items.all()
         # Iterate over each item in the shopping cart
         for item in items:
-            product_name = item.product.name
+            product_name = item.item.name
             quantity = item.quantity
 
             # Retrieve the product ID based on the product name from the mapping
-            product_id = PRODUCT_ID_MAP.get(product_name)
-            if not product_id:
+            price_id = PRODUCT_ID_MAP.get(product_name)
+
+            if not price_id:
                 # Handle case where product name is not found in the mapping
                 raise ValueError(f"Product '{product_name}' not found")
 
             # Add the product with its quantity to the line items
             line_items.append({
-                'price': product_id,
+                'price': price_id,
                 'quantity': quantity,
             })
 
@@ -84,13 +81,16 @@ def create_checkout_session(request):
             logger.error("Unexpected Error: %s", str(e))
             return JsonResponse({'error': 'An unexpected error occurred'}, status=500)
 
+    # else:
+    #     return HttpResponseNotAllowed(['GET'])
+
 
 class SuccessView(TemplateView):
-    template_name = 'success.html'
+    template_name = 'payment/success.html'
 
 
 class CancelledView(TemplateView):
-    template_name = 'cancelled.html'
+    template_name = 'payment/canceled.html'
 
 
 @csrf_exempt
