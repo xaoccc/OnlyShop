@@ -1,6 +1,6 @@
 import logging
 import stripe
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 from OnlyShop.main_app.models import ItemOrder
@@ -19,6 +19,16 @@ PRODUCT_ID_MAP = {
     'BLU': 'price_1P7FB7P7rtsr5KNvPdvfYWkF',
 }
 
+class PaymentSubmitView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
+    template_name = 'order/payment.html'
+
+    def post(self, request, *args, **kwargs):
+        # Process form data and perform necessary actions
+        # For example, save data to the database
+        return HttpResponse("POST")
+
+
+
 
 @csrf_exempt
 def stripe_config(request):
@@ -34,8 +44,9 @@ def create_checkout_session(request):
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         line_items = []
-
         items = Order.objects.filter(user=request.user, ordered=False)[0].items.all()
+
+
         # Iterate over each item in the shopping cart
         for item in items:
             product_name = item.item.name
@@ -53,6 +64,8 @@ def create_checkout_session(request):
                 'price': price_id,
                 'quantity': quantity,
             })
+
+
 
         try:
             # Create new Checkout Session for the order
@@ -72,6 +85,8 @@ def create_checkout_session(request):
                 mode='payment',
                 line_items=line_items
             )
+            # Update the order status at the last possible place in the code
+            Order.objects.filter(user=request.user, ordered=False).update(ordered=True)
             return JsonResponse({'sessionId': checkout_session['id']})
 
         except stripe.error.StripeError as e:

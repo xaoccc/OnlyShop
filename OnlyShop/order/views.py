@@ -11,8 +11,6 @@ from OnlyShop.profiles.models import BillingInfo
 from OnlyShop.utils.mixins import OrdersCountMixin, OnlyShopLoginRequiredMixin, GetUserMixin
 
 
-
-
 class AllOrdersView(OnlyShopLoginRequiredMixin, OrdersCountMixin, ListView):
     model = Order
     template_name = "order/all-orders.html"
@@ -66,7 +64,7 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
     template_name = 'order/order-checkout.html'
     form_class = BillingInfoForm
     def get_success_url(self):
-        return reverse('create_checkout_session')
+        return reverse('payment_submit')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -90,7 +88,7 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
             billing_info_form.save()
             current_billing_info = BillingInfo.objects.last()
             current_order = Order.objects.filter(user=self.request.user, ordered=False)[0]
-            current_order.ordered = True
+            # current_order.ordered = True
             current_order.billing_info = current_billing_info
             total_cart_amount = 0
             if Order.objects.filter(user=self.request.user, ordered=False):
@@ -100,20 +98,13 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
             current_order.total_order_amount = total_cart_amount
             current_order.save()
 
-            payment_option = billing_info_form.cleaned_data.get('payment_option')
-
-            if payment_option == 'Stripe':
-                return redirect('order_payment', payment_option='stripe')
-            elif payment_option == 'PayPal':
-                return redirect('order_payment', payment_option='paypal')
-            else:
-                messages.warning(
-                    self.request, "Invalid payment option selected")
-                return redirect('order_checkout')
+            return redirect('payment_submit')
 
         else:
             context = self.get_context_data()
             return self.render_to_response(context)
+
+
 
 
 

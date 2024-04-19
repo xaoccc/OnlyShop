@@ -2,8 +2,7 @@
 {% block content %}
 {% load static %}
 
-  <script type="module" src="https://js.stripe.com/v3/"></script>
-  <script type="module" src="{% static 'js/stripe.js' %}"></script>
+
 
 
 <main>
@@ -17,8 +16,9 @@
                 <p>Payment Info</p>
                 <div class="my-3">
 
-                    <form action="{% url 'create_checkout_session' %}" method="post">
+                    <form id="checkoutForm" action="{% url 'create_checkout_session' %}" method="get">
                         {% csrf_token %}
+
 
                         <button class="button is-primary" type="submit" id="submitBtn">Finish Order</button>
                     </form>
@@ -33,7 +33,11 @@
 
     </div>
 
-
+<script>
+    document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+    });
+</script>
 
 
 

@@ -40,7 +40,7 @@
                         {% endif %}
 
                     </div>
-                        <form  action="{% url 'create_checkout_session' %}" method="get">
+                        <form method="post" action="{% url 'order_checkout' %}" >
 
                             {% csrf_token %}
                             {% for field in form %}
@@ -50,9 +50,8 @@
                                     <label class="form-label checkout-form" for="{{ field.id_for_label }}">{{ field }}</label>
                                 </div>
                             {% endfor %}
-                            <script type="module" src="https://js.stripe.com/v3/"></script>
-                            <script type="module" src="{% static 'js/stripe.js' %}"></script>
-                            <button class="btn btn-primary" id="submitBtn" type="submit">Continue to payment</button>
+
+                            <button class="btn btn-primary" type="submit">Continue to payment</button>
 
                         </form>
 
