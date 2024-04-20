@@ -8,6 +8,13 @@ This is a web store created with Django, Python, HTML, CSS and Bootstrap
 - Add or remove items from shopping bag
 - Create shopping orders
 
+### Todo:
+- Add field stripe_price_id to Item model
+- Remove unnecessary imports
+- Add more tests
+- Format price display in checkout page
+- Add order summary to payment page
+
 ### Easy insert test data:
 - Open https://www.mockaroo.com/
 - Populate database like this:
