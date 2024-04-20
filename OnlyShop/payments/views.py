@@ -1,13 +1,9 @@
 import logging
 import stripe
-from django.shortcuts import render, redirect
-from django.views import View
-
-from OnlyShop.main_app.models import ItemOrder
 from OnlyShop.order.models import Order
 from OnlyShop.utils.mixins import GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin
 from django.conf import settings
-from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 
@@ -17,17 +13,12 @@ PRODUCT_ID_MAP = {
     'Banana': 'price_1P7DrxP7rtsr5KNvG7c6hwuj',
     'T-Mobile': 'price_1P7FAUP7rtsr5KNvsna6X4In',
     'BLU': 'price_1P7FB7P7rtsr5KNvPdvfYWkF',
+    'Nike': 'price_1P7Z4HP7rtsr5KNvSc30Ao49',
+    'Adidas': 'price_1P7Z8qP7rtsr5KNvEvULYmHk',
 }
 
 class PaymentSubmitView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
     template_name = 'order/payment.html'
-
-    def post(self, request, *args, **kwargs):
-        # Process form data and perform necessary actions
-        # For example, save data to the database
-        return HttpResponse("POST")
-
-
 
 
 @csrf_exempt
@@ -85,6 +76,11 @@ def create_checkout_session(request):
                 mode='payment',
                 line_items=line_items
             )
+            # Update the items in the cart to be ordered
+            items_in_cart = Order.objects.filter(user=request.user, ordered=False)[0].items.all()
+            for item in items_in_cart:
+                item.ordered = True
+                item.save()
             # Update the order status at the last possible place in the code
             Order.objects.filter(user=request.user, ordered=False).update(ordered=True)
             return JsonResponse({'sessionId': checkout_session['id']})
@@ -100,11 +96,11 @@ def create_checkout_session(request):
     #     return HttpResponseNotAllowed(['GET'])
 
 
-class SuccessView(TemplateView):
+class SuccessView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
     template_name = 'payment/success.html'
 
 
-class CancelledView(TemplateView):
+class CancelledView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
     template_name = 'payment/canceled.html'
 
 

@@ -70,17 +70,19 @@
                 </h4>
                 <ul class="list-group mb-3">
                     {% for item in orders.all %}
-                    <li class="list-group-item d-flex justify-content-between">
-                        <div>
-                            <h6 class="my-0">{{ item.item.name }}</h6>
+                        {% if not item.ordered %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div>
+                                    <h6 class="my-0">{{ item.item.name }}</h6>
 
-                            <small class="text-muted">{{ item.item.description }}</small>
-                        </div>
-                        <div class="d-flex text-muted">
-                            <div class="pe-2">{{ item.quantity }} x ${{ item.item.new_price }}:</div>
-                            <div>${% widthratio item.item.new_price 1 item.quantity %}</div>
-                        </div>
-                    </li>
+                                    <small class="text-muted">{{ item.item.description }}</small>
+                                </div>
+                                <div class="d-flex text-muted">
+                                    <div class="pe-2">{{ item.quantity }} x ${{ item.item.new_price }}:</div>
+                                    <div>${% widthratio item.item.new_price 1 item.quantity %}</div>
+                                </div>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (USD)</span>

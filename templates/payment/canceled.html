@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-  <section class="section">
+<main>
     <div class="container">
-      <p>Your payment was cancelled.</p>
-
+        <h2 class="my-5 text-center">Your payment was cancelled!</h2>
+        <div class="row md-5 my-5 text-center">
+            <a href="{% url 'index' %}">Return to home page</a>
+        </div>
     </div>
-  </section>
+</main>
 {% endblock %}

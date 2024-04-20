@@ -16,6 +16,7 @@
 
                         {% for order in object_list %}
                             {% for item in order.items.all %}
+                                {% if not item.ordered %}
                                 <div class="row justify-content-center mb-3">
                                   <div class="col-md-12 col-xl-10">
                                     <div class="card shadow-0 border rounded-3">
@@ -52,6 +53,7 @@
                                     </div>
                                   </div>
                                 </div>
+                                {% endif %}
                             {% endfor %}
                         {% endfor %}
                         <div class="d-flex flex-column mt-4">
@@ -73,16 +75,18 @@
                 </h4>
                 <ul class="list-group mb-3">
                     {% for item in orders.all %}
-                    <li class="list-group-item d-flex justify-content-between">
-                        <div>
-                            <h6 class="my-0">{{ item.item.name }}</h6>
+                        {% if not item.ordered %}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div>
+                                    <h6 class="my-0">{{ item.item.name }}</h6>
 
-                            <small class="text-muted">{{ item.item.description }}</small>
-                        </div>
-                        <div class="text-muted w-100">
-                            {{ item.quantity }} x ${{ item.item.new_price }}: ${{ item.total_item_order_amount|floatformat:2 }}
-                        </div>
-                    </li>
+                                    <small class="text-muted">{{ item.item.description }}</small>
+                                </div>
+                                <div class="text-muted w-100">
+                                    {{ item.quantity }} x ${{ item.item.new_price }}: ${{ item.total_item_order_amount|floatformat:2 }}
+                                </div>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (USD): </span>

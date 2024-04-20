@@ -54,7 +54,8 @@ class OrderSummaryView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixi
         total_cart_amount = 0
         if Order.objects.filter(user=self.request.user, ordered=False):
             for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
-                total_cart_amount += item.total_item_order_amount
+                if not item.ordered:
+                    total_cart_amount += item.total_item_order_amount
         context['total_cart_amount'] = total_cart_amount
         context['current_order'] = Order.objects.filter(user=self.request.user)
         return context
@@ -71,7 +72,8 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
         total_cart_amount = 0
         if Order.objects.filter(user=self.request.user, ordered=False):
             for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
-                total_cart_amount += item.item.new_price * item.quantity
+                if not item.ordered:
+                    total_cart_amount += item.item.new_price * item.quantity
         context['total_cart_amount'] = total_cart_amount
         context['current_order'] = Order.objects.filter(user=self.request.user)
         return context

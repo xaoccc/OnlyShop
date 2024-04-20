@@ -1,13 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView, FormView, TemplateView
+from django.views.generic import DetailView, DeleteView, UpdateView, CreateView
 from OnlyShop.main_app.forms import ItemDeleteForm
 from OnlyShop.main_app.models import Item, ItemOrder
 from django.contrib import messages
-
 from OnlyShop.order.models import Order
-from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopStaffRequiredMixin, OnlyShopLoginRequiredMixin
+from OnlyShop.utils.mixins import OrdersCountMixin, OnlyShopStaffRequiredMixin, OnlyShopLoginRequiredMixin
 
 
 class ItemDetailView(OrdersCountMixin, OnlyShopLoginRequiredMixin, DetailView):
@@ -29,6 +28,7 @@ def add_to_cart(request, pk):
                                            total_item_order_amount=item.new_price)
 
     order_queryset = Order.objects.filter(user=request.user, ordered=False)
+    print(order_queryset)
 
     if order_queryset.exists():
         order = order_queryset[0]
