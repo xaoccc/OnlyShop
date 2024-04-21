@@ -26,6 +26,7 @@ class Item(models.Model):
     label = models.CharField(choices=LABEL_TYPES, blank=True, null=True, max_length=10, verbose_name="Label")
     label_style = models.CharField(blank=True, null=True)
     description = models.TextField(verbose_name="Description")
+    stripe_price_id = models.CharField(max_length=100, blank=True, null=True, default="stripe_price_id")
 
 
     def __str__(self):

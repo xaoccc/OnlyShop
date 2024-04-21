@@ -9,14 +9,6 @@ from django.views.generic.base import TemplateView
 
 logger = logging.getLogger(__name__)
 
-PRODUCT_ID_MAP = {
-    'Banana': 'price_1P7DrxP7rtsr5KNvG7c6hwuj',
-    'T-Mobile': 'price_1P7FAUP7rtsr5KNvsna6X4In',
-    'BLU': 'price_1P7FB7P7rtsr5KNvPdvfYWkF',
-    'Nike': 'price_1P7Z4HP7rtsr5KNvSc30Ao49',
-    'Adidas': 'price_1P7Z8qP7rtsr5KNvEvULYmHk',
-}
-
 class PaymentSubmitView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
     template_name = 'order/payment.html'
 
@@ -43,11 +35,9 @@ def create_checkout_session(request):
             product_name = item.item.name
             quantity = item.quantity
 
-            # Retrieve the product ID based on the product name from the mapping
-            price_id = PRODUCT_ID_MAP.get(product_name)
+            price_id = item.item.stripe_price_id
 
             if not price_id:
-                # Handle case where product name is not found in the mapping
                 raise ValueError(f"Product '{product_name}' not found")
 
             # Add the product with its quantity to the line items
