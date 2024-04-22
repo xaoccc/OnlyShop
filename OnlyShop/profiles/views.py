@@ -76,7 +76,7 @@ class RegisterView(CreateView):
         form = super().form_valid(*args, **kwargs)
         send_register_email(self.request)
         # Here we log in the newly registered user and he/she/it is redirected
-        # to the home page as legged-in user for better UX
+        # to the home page as logged-in user for better UX
         login(self.request, self.object)
         return form
 

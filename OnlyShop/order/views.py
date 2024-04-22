@@ -1,10 +1,6 @@
-from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, FormView
-
-from OnlyShop.main_app.models import ItemOrder
 from OnlyShop.order.models import Order
 from OnlyShop.profiles.forms import BillingInfoForm
 from OnlyShop.profiles.models import BillingInfo
@@ -31,7 +27,6 @@ class OrderDetailsView(OnlyShopLoginRequiredMixin, OrdersCountMixin, DetailView)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["items"] = self.object.items
-
         return context
 
 
@@ -90,7 +85,6 @@ class OrderCheckoutView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
             billing_info_form.save()
             current_billing_info = BillingInfo.objects.last()
             current_order = Order.objects.filter(user=self.request.user, ordered=False)[0]
-            # current_order.ordered = True
             current_order.billing_info = current_billing_info
             total_cart_amount = 0
             if Order.objects.filter(user=self.request.user, ordered=False):

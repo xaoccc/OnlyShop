@@ -2,49 +2,26 @@
 {% block content %}
 {% load static %}
 
-
-
-
 <main>
     <div class="container">
-        <!-- Heading -->
         <h2 class="my-5 text-center">Checkout form</h2>
-        <!--Card-->
         <div class="card p-4">
-            <!--Grid row-->
             <div class="row mb-3">
                 <p>Payment Info</p>
                 <div class="my-3">
-
                     <form id="checkoutForm" action="{% url 'create_checkout_session' %}" method="get">
                         {% csrf_token %}
-
-
                         <button class="button is-primary" type="submit" id="submitBtn">Finish Order</button>
                     </form>
-
                 </div>
-
-                <!--/.Card-->
             </div>
-            <!--Grid column-->
-
         </div>
-
     </div>
-
-<script>
-    document.getElementById("checkoutForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-    });
-</script>
-
-
-
-
-
-
-
+    <script>
+        document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+        });
+    </script>
 </main>
 
 {% endblock %}

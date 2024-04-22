@@ -29,24 +29,22 @@ def create_checkout_session(request):
         line_items = []
         items = Order.objects.filter(user=request.user, ordered=False)[0].items.all()
 
-
         # Iterate over each item in the shopping cart
         for item in items:
-            product_name = item.item.name
+            # Here we connect unique item from our app (product_id) with unique item from our stripe account (price_id)
+            # Make sure that the item name and item price is the same in both the app and stripe account
+            product_id = item.item.id
             quantity = item.quantity
-
             price_id = item.item.stripe_price_id
 
             if not price_id:
-                raise ValueError(f"Product '{product_name}' not found")
+                raise ValueError(f"Product with id '{product_id}' not found")
 
             # Add the product with its quantity to the line items
             line_items.append({
                 'price': price_id,
                 'quantity': quantity,
             })
-
-
 
         try:
             # Create new Checkout Session for the order
@@ -81,6 +79,7 @@ def create_checkout_session(request):
         except Exception as e:
             logger.error("Unexpected Error: %s", str(e))
             return JsonResponse({'error': 'An unexpected error occurred'}, status=500)
+
 
 class SuccessView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
     template_name = 'payment/success.html'
