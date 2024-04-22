@@ -82,10 +82,6 @@ def create_checkout_session(request):
             logger.error("Unexpected Error: %s", str(e))
             return JsonResponse({'error': 'An unexpected error occurred'}, status=500)
 
-    # else:
-    #     return HttpResponseNotAllowed(['GET'])
-
-
 class SuccessView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
     template_name = 'payment/success.html'
 
