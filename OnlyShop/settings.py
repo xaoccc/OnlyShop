@@ -1,4 +1,6 @@
 from pathlib import Path
+
+import dj_database_url
 from dotenv import load_dotenv
 import os
 
@@ -11,7 +13,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'onlyshop.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -58,14 +60,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'OnlyShop.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': '127.0.0.1',
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'PORT': '5432',
-        'NAME': os.environ.get('DB_NAME'),
-    }
+
+    'default':
+        dj_database_url.config(
+            default=os.environ.get('ONLYSHOP_DB'),
+            conn_max_age=600
+        )
+        # {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'HOST': '127.0.0.1',
+    #     'USER': os.environ.get('DB_USER'),
+    #     'PASSWORD': os.environ.get('DB_PASSWORD'),
+    #     'PORT': '5432',
+    #     'NAME': os.environ.get('DB_NAME'),
+    # }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
