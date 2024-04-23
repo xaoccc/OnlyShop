@@ -1,0 +1,162 @@
+ul {
+    padding-left: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+.carousel-item {
+      height: 40vh;
+}
+
+.card {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.footer-cta {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+}
+.price {
+  color: #263238;
+  font-size: 24px;
+}
+
+.card-title {
+color:#263238
+}
+
+.sale {
+  color: #E53935
+}
+
+.sale-badge {
+  background-color: #E53935
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+}
+
+.image-wrapper {
+    width: 200px; /* Set your desired width */
+    text-align: center; /* Center align text */
+}
+
+.img-footer {
+    width: 100%; /* Ensure the image fills the container */
+    height: 200px; /* Set your desired height */
+    object-fit: cover;
+}
+
+.login-form, .register-form {
+    max-width: 28em;
+    margin: 2em auto;
+}
+
+.login-form input, .register-form input {
+    margin-bottom: 1.5em;
+}
+
+.errorlist {
+    color: red;
+}
+
+.header-container{
+    background-image: url("../img/main-theme.f4326230e217.jpg");
+    background-size: cover;
+}
+
+.card-container {
+    margin-top: 2em;
+}
+
+.product-list-img-wrapper {
+  position: relative;
+  padding-bottom: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.product-list-img-wrapper img {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+}
+
+.add-item > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-item > div > input, .add-item > div > select {
+    width: 20em;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+.delete-form input {
+    background: rgb(240,240,240);
+    color: rgb(120,120,120);
+    border: solid 1px black;
+}
+
+.checkout-form > input {
+    width: 75%;
+    margin-bottom: 1em
+}
+
+.clear {
+    clear: both;
+    height: 80px;
+}
+
+@media only screen and (max-width: 600px) {
+    .login-form, .register-form {
+        max-width: 20em;
+    }
+
+    .main-img {
+        width: unset;
+    }
+}
