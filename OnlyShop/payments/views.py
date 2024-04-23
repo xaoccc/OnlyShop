@@ -1,4 +1,6 @@
 import logging
+import os
+
 import stripe
 from OnlyShop.order.models import Order
 from OnlyShop.utils.mixins import GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin
@@ -23,7 +25,7 @@ def stripe_config(request):
 @csrf_exempt
 def create_checkout_session(request):
     if request.method == 'GET':
-        domain_url = 'http://localhost:8000/payments/'
+        domain_url = os.environ.get('STRIPE_DOMAIN_URL')
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         line_items = []
