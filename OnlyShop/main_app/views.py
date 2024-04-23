@@ -73,7 +73,7 @@ def remove_from_cart(request, pk):
 class ItemCreateView(OrdersCountMixin, OnlyShopStaffRequiredMixin, CreateView):
     template_name = 'item/item-add.html'
     model = Item
-    fields = ['name', 'new_price', 'old_price', 'type', 'label', 'image', 'description']
+    fields = ['name', 'new_price', 'old_price', 'type', 'label', 'image', 'description', 'stripe_price_id']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
