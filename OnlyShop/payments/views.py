@@ -3,6 +3,7 @@ import os
 
 import stripe
 from OnlyShop.order.models import Order
+from OnlyShop.profiles.models import BillingInfo
 from OnlyShop.utils.mixins import GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
@@ -12,7 +13,20 @@ from django.views.generic.base import TemplateView
 logger = logging.getLogger(__name__)
 
 class PaymentSubmitView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMixin, TemplateView):
-    template_name = 'order/payment.html'
+    template_name = 'payment/payment.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        items = []
+        if Order.objects.filter(user=self.request.user, ordered=False):
+            for item in Order.objects.filter(user=self.request.user, ordered=False)[0].items.all():
+                if not item.ordered:
+                    items.append(item)
+
+        # context['total_cart_amount'] = total_cart_amount
+        context['items'] = items
+        context['billing_info'] = BillingInfo.objects.filter(profile=self.request.user.profile).last()
+        return context
 
 
 @csrf_exempt

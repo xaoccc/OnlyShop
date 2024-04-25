@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<main>
+    <div class="container">
+        <h2 class="my-5 text-center">Checkout form</h2>
+        <div class="card p-4">
+            <div class="row mb-3">
+                <h3>Order Receipt</h3>
+                <div class="my-3">
+                Items list:
+                {% for itemorder in items %}
+                    <div>{{ itemorder.quantity }} x {{ itemorder.item.name }}: {{ itemorder.total_item_order_amount|floatformat:2 }}€ </div>
+                {% endfor %}
+                </div>
+                <div class="my-3">
+                    <div>Deliver to:</div>
+                    <div>{{ request.user.profile.first_name }} {{ request.user.profile.last_name }}, phone number: {{ billing_info.phone_number }}</div>
+                </div>
+                <div>Place of delivery:</div>
+                <div>{{ billing_info.country }}, {{ billing_info.postal_code }} {{ billing_info.city }}, {{ billing_info.street_address }}</div>
+
+                <div class="my-3">
+                    <form id="checkoutForm" action="{% url 'create_checkout_session' %}" method="get">
+                        {% csrf_token %}
+                        <button class="button btn btn-primary" type="submit" id="submitBtn">Finish Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+        });
+    </script>
+</main>
+
+{% endblock %}
