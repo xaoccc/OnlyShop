@@ -49,9 +49,15 @@
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
-                        <div class="d-flex flex-column mt-4">
-                          <a href="{% url 'order_checkout' %}" class="btn btn-primary btn-sm">Checkout</a>
-                        </div>
+                        {% if not request.user.profile.first_name or not request.user.profile.last_name %}
+                            <div class="d-flex flex-column mt-4">
+                              <a href="{% url 'profile-edit' pk=request.user.pk %}" class="btn btn-primary btn-sm">Enter profile details</a>
+                            </div>
+                        {% else %}
+                            <div class="d-flex flex-column mt-4">
+                              <a href="{% url 'order_checkout' %}" class="btn btn-primary btn-sm">Checkout</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

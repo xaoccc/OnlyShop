@@ -3,11 +3,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView, TemplateView
 
 from OnlyShop import settings
 from OnlyShop.main_app.models import Item
+from OnlyShop.order.models import Order
 from OnlyShop.profiles.forms import UserLoginForm, CreateUserForm, ProfileEditForm, UserDeleteForm
 from OnlyShop.profiles.models import Profile
 from OnlyShop.utils.mixins import OrdersCountMixin, GetUserMixin, OnlyShopLoginRequiredMixin, \
@@ -69,8 +70,9 @@ def send_register_email(request):
 class RegisterView(CreateView):
     form_class = CreateUserForm
     template_name = 'register.html'
-    def get_success_url(self):
-        return reverse('index')
+    success_url = reverse_lazy('index')
+    # def get_success_url(self):
+    #     return reverse('index')
 
     def form_valid(self, *args, **kwargs):
         form = super().form_valid(*args, **kwargs)
@@ -95,7 +97,10 @@ class ProfileEditView(OnlyShopThisUserRequiredMixin, OrdersCountMixin, UpdateVie
     form_class = ProfileEditForm
 
     def get_success_url(self):
-        return reverse('profile-details', kwargs={'pk': self.object.pk})
+        if Order.objects.filter(user=self.request.user, ordered=False):
+            return reverse('order_checkout')
+        else:
+            return reverse('profile-details', kwargs={'pk': self.object.pk})
 
     def get_queryset(self):
         return Profile.objects.all()
