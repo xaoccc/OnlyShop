@@ -51,7 +51,7 @@
                         {% endfor %}
                         {% if not request.user.profile.first_name or not request.user.profile.last_name %}
                             <div class="d-flex flex-column mt-4">
-                              <a href="{% url 'profile-edit' pk=request.user.pk %}" class="btn btn-primary btn-sm">Enter profile details</a>
+                              <a href="{% url 'profile-edit' pk=request.user.pk %}" class="btn btn-primary btn-sm">Next</a>
                             </div>
                         {% else %}
                             <div class="d-flex flex-column mt-4">
