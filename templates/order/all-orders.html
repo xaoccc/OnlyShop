@@ -15,9 +15,9 @@
             <div class="p-1">Phone Number: {{ order.billing_info.phone_number }}</div>
             <div class="p-1">Items ordered:</div>
             {% for item_order in order.items.all %}
-                <div class="p-1">{{ item_order.quantity }} x {{ item_order.item }}: ${{ item_order.total_item_order_amount|floatformat:2 }}</div>
+                <div class="p-1">{{ item_order.quantity }} x {{ item_order.item }}: {{ item_order.total_item_order_amount|floatformat:2 }}€</div>
             {% endfor %}
-            <div class="p-1">Total amount: ${{ order.total_order_amount|floatformat:2 }}</div>
+            <div class="p-1">Total amount: {{ order.total_order_amount|floatformat:2 }}€</div>
             <a href="{% url 'order_details' pk=order.pk %}" class="btn btn-outline-secondary">More Details</a>
             <hr/>
         {% endfor %}

@@ -32,10 +32,10 @@
                     <p class="lead">
                         {% if object.old_price %}
                             <span class="me-1">
-                                <del>${{ object.old_price }}</del>
+                                <del>{{ object.old_price }}€</del>
                             </span>
                         {% endif %}
-                        <span>${{ object.new_price }}</span>
+                        <span>{{ object.new_price }}€</span>
                     </p>
 
                     <strong>{{ object.description }}</strong>
