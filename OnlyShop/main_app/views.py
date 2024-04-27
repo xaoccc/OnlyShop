@@ -15,7 +15,14 @@ class ItemDetailView(OrdersCountMixin, OnlyShopLoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        item_in_cart = False
+        order_queryset = Order.objects.filter(user=self.request.user, ordered=False)
+        if order_queryset.exists():
+            order = order_queryset[0]
+            if order.items.filter(item__pk=self.object.pk).exists():
+                item_in_cart = True
         context['user'] = self.request.user
+        context['item_in_cart'] = item_in_cart
         return context
 
 
@@ -28,7 +35,6 @@ def add_to_cart(request, pk):
                                            total_item_order_amount=item.new_price)
 
     order_queryset = Order.objects.filter(user=request.user, ordered=False)
-    print(order_queryset)
 
     if order_queryset.exists():
         order = order_queryset[0]

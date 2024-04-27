@@ -47,10 +47,12 @@
                             <i class="fas fa-shopping-cart ms-1"></i>
                         </a>
 
-                        <a href="{% url 'remove-from-cart' pk=object.pk %}" class="btn btn-danger ms-1" type="submit">
-                            Remove from cart
-                            <i class="fas fa-shopping-cart ms-1"></i>
-                        </a>
+                        {% if item_in_cart %}
+                            <a href="{% url 'remove-from-cart' pk=object.pk %}" class="btn btn-danger ms-1" type="submit">
+                                Remove from cart
+                                <i class="fas fa-shopping-cart ms-1"></i>
+                            </a>
+                        {% endif %}
 
                     {% if messages %}
                         <ul class="messages list-unstyled">

@@ -9,7 +9,6 @@ This is a web store created with Django, Python, HTML, CSS and Bootstrap
 - Create shopping orders
 
 ### Todo:
-- Remove Remove product button if product not in cart
 - Add/remove Paypal payment 
 - Remove Billing info button in profile edit page
 - Create save Billing info functionality
