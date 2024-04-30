@@ -54,6 +54,21 @@ class IndexView(GetUserMixin, OrdersCountMixin, ListView):
         context["item_types"] = ["Small", "Medium", "Big", "Very Big", "Abstract"]
         return context
 
+class IndexSortedByNameView(IndexView):
+    def get_queryset(self):
+        queryset = Item.objects.all().order_by("name")
+
+        filter_by_item_name = self.request.GET.get("item_name", None)
+
+        if filter_by_item_name:
+            queryset = queryset.filter(name__icontains=filter_by_item_name)
+
+        filter_by_item_type = self.request.GET.get("item_type", None)
+        if filter_by_item_type:
+            queryset = Item.objects.filter(type__iexact=filter_by_item_type)
+
+        return queryset
+
 
 class UserLogIn(LoginView):
     authentication_form = UserLoginForm

@@ -63,18 +63,18 @@ WSGI_APPLICATION = 'OnlyShop.wsgi.application'
 DATABASES = {
 
     'default':
-        dj_database_url.config(
-            default=os.environ.get('ONLYSHOP_DB'),
-            conn_max_age=600
-        )
-    #     {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'HOST': '127.0.0.1',
-    #     'USER': os.environ.get('DB_USER'),
-    #     'PASSWORD': os.environ.get('DB_PASSWORD'),
-    #     'PORT': '5432',
-    #     'NAME': os.environ.get('DB_NAME'),
-    # }
+        # dj_database_url.config(
+        #     default=os.environ.get('ONLYSHOP_DB'),
+        #     conn_max_age=600
+        # )
+        {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': '127.0.0.1',
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME'),
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [

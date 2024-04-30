@@ -4,6 +4,7 @@ from OnlyShop.profiles import views
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('sorted/', views.IndexSortedByNameView.as_view(), name='sorted_by_name'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.UserLogIn.as_view(), name='login'),
     path('user-logout/', views.user_logout, name='logout'),
