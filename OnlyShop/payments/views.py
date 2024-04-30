@@ -23,7 +23,6 @@ class PaymentSubmitView(GetUserMixin, OrdersCountMixin, OnlyShopLoginRequiredMix
                 if not item.ordered:
                     items.append(item)
 
-        # context['total_cart_amount'] = total_cart_amount
         context['items'] = items
         context['billing_info'] = BillingInfo.objects.filter(profile=self.request.user.profile).last()
         return context
