@@ -70,10 +70,6 @@ class Profile(models.Model):
 
 class BillingInfo(models.Model):
     COUNTRY_CHOICES = [(country.alpha_2, country.name) for country in pycountry.countries]
-    PAYMENT_METHODS = (
-        ("PayPal", "PayPal"),
-        ("Stripe", "Stripe"),
-    )
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     postal_code = models.CharField(max_length=10, blank=True, null=True, validators=(postal_code_validator,))
@@ -81,5 +77,5 @@ class BillingInfo(models.Model):
     city = models.CharField(max_length=30)
     street_address = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15, validators=(MinLengthValidator(10), all_digits_validator))
-    payment_option = models.CharField(choices=PAYMENT_METHODS)
+
 
