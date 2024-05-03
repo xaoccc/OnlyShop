@@ -41,6 +41,9 @@
                     <a href="{% url 'profile-edit' pk=request.user.pk %}" class="btn btn-primary" type="submit">Edit Profile</a>
                     <a href="{% url 'profile-delete' pk=request.user.pk %}" class="btn btn-danger" type="submit">Delete Profile</a>
                 </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="{% url 'profile-password-edit' pk=request.user.pk %}" class="btn btn-primary" type="submit">Change Password</a>
+                </div>
 
 
             </div>

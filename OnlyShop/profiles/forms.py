@@ -57,6 +57,7 @@ class ProfileEditForm(InputStyleMixin, forms.ModelForm):
         self.fields['last_name'].validators += [MinLengthValidator(2, "Your name should be minimum two characters long!"), name_validator]
 
 
+
 class UserDeleteForm(forms.ModelForm):
     class Meta:
         model = UserModel

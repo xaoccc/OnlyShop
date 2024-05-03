@@ -10,8 +10,6 @@ This is a web store created with Django, Python, HTML, CSS and Bootstrap
 
 ### Todo:
 - Create save Billing info functionality
-- Create change password functionality
-- Create sort by name
 
 
 ### Easy insert test data:
