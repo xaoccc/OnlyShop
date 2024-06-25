@@ -63,10 +63,13 @@ WSGI_APPLICATION = 'OnlyShop.wsgi.application'
 DATABASES = {
 
     'default':
+        # OnRender DB settings:
         dj_database_url.config(
             default=os.environ.get('ONLYSHOP_DB'),
             conn_max_age=600
         )
+
+        # Local DB settings:
     #     {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'HOST': '127.0.0.1',
