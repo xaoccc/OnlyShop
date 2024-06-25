@@ -1,11 +1,9 @@
-
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, get_user_model
 from django import forms
-from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 
-from OnlyShop.profiles.models import AppUser, Profile, BillingInfo
+from OnlyShop.profiles.models import Profile, BillingInfo
 from OnlyShop.profiles.validators import name_validator
 from OnlyShop.utils.mixins import InputStyleMixin
 
@@ -33,7 +31,7 @@ class UserLoginForm(InputStyleMixin, AuthenticationForm):
 
 class CreateUserForm(InputStyleMixin, UserCreationForm):
     class Meta:
-        model = AppUser
+        model = UserModel
         fields = ['email', 'password1', 'password2']
 
     # Here we create a new Profile instance automatically when creating a user
@@ -55,6 +53,7 @@ class ProfileEditForm(InputStyleMixin, forms.ModelForm):
         # Add validators to the fields
         self.fields['first_name'].validators += [MinLengthValidator(2, "Your name should be minimum two characters long!"), name_validator]
         self.fields['last_name'].validators += [MinLengthValidator(2, "Your name should be minimum two characters long!"), name_validator]
+
 
 
 class UserDeleteForm(forms.ModelForm):
