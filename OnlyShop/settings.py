@@ -64,12 +64,13 @@ DATABASES = {
 
     'default':
         # OnRender DB settings:
+        # All these are standard, except for the INTERNAL_ONLYSHOP_DB, which is stored in the .env file in onRender account
         dj_database_url.config(
-            default=os.environ.get('ONLYSHOP_DB'),
+            default=os.environ.get('INTERNAL_ONLYSHOP_DB'),
             conn_max_age=600
         )
 
-        # Local DB settings:
+    #     Local DB settings:
     #     {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'HOST': '127.0.0.1',
