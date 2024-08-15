@@ -64,6 +64,7 @@ DATABASES = {
 
     'default':
         # OnRender DB settings:
+        # pip install dj-database-url
         # All these are standard, except for the INTERNAL_ONLYSHOP_DB, which is stored in the .env file in onRender account
         dj_database_url.config(
             default=os.environ.get('INTERNAL_ONLYSHOP_DB'),
