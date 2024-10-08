@@ -1,20 +1,20 @@
 databases:
-  - name: onlyshop-db
+  - name: mysitedb
     plan: free
-    databaseName: onlyshop_db_j7vi
-    user: onlyshop_user
+    databaseName: mysite
+    user: mysite
 
 services:
   - type: web
     plan: free
-    name: OnlyShop
+    name: mysite
     runtime: python
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: onlyshop_db_j7vi
+          name: mysitedb
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
