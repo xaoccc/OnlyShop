@@ -1,0 +1,22 @@
+databases:
+  - name: onlyshop-db
+    plan: free
+    databaseName: onlyshop_db_j7vi
+    user: onlyshop_user
+
+services:
+  - type: web
+    plan: free
+    name: OnlyShop
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn mysite.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: onlyshop_db_j7vi
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
