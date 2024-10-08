@@ -64,19 +64,12 @@ DATABASES = {
 
     'default':
         # OnRender DB settings:
-        # pip install dj-database-url
-        # All these are standard, except for the INTERNAL_ONLYSHOP_DB, which is stored in the .env file in onRender account
-        # For changes in the external (render) database, use EXTERNAL_ONLYSHOP_DB and commands in the terminal:
-        # python manage.py makemigrations
-        # python manage.py migrate
-        # When deploying to Render, the INTERNAL_ONLYSHOP_DB is used, so it can run faster there
         dj_database_url.config(
-            default=os.environ.get('INTERNAL_ONLYSHOP_DB'),
+            default=os.environ.get('ONLYSHOP_DB'),
             conn_max_age=600
         )
 
-    #     Local DB settings:
-    #     Use them for local testing
+        # Local DB settings:
     #     {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'HOST': '127.0.0.1',
